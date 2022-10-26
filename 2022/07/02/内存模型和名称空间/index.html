@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="单独编译先从之前的代码讲起： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include &lt;iostream&gt;#include &lt;cmath&gt;struct polar &#x2F;&#x2F; 极坐标结构&amp;#123;    double dista">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存模型和名称空间">
+<meta property="og:url" content="https://zhaigong.github.io/2022/07/02/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4/index.html">
+<meta property="og:site_name" content="翟公的博客">
+<meta property="og:description" content="单独编译先从之前的代码讲起： 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include &lt;iostream&gt;#include &lt;cmath&gt;struct polar &#x2F;&#x2F; 极坐标结构&amp;#123;    double dista">
+<meta property="og:locale">
+<meta property="og:image" content="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/image-20220703013114931.png">
+<meta property="article:published_time" content="2022-07-02T15:42:19.000Z">
+<meta property="article:modified_time" content="2022-07-05T08:45:19.000Z">
+<meta property="article:author" content="翟公">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/image-20220703013114931.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":false,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://zhaigong.github.io/2022/07/02/内存模型和名称空间/"/>
+
+
+
+
+
+  <title>内存模型和名称空间 | 翟公的博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">翟公的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个分享技术，生活的地方</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaigong.github.io/2022/07/02/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/透明底logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翟公的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内存模型和名称空间</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-07-02T23:42:19+08:00">
+                2022-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/07/02/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2022/07/02/%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="单独编译"><a href="#单独编译" class="headerlink" title="单独编译"></a>单独编译</h2><p>先从之前的代码讲起：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">polar</span> <span class="comment">// 极坐标结构</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> distance;</span><br><span class="line">    <span class="type">double</span> angle;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">rect</span> <span class="comment">// 平面直角坐标系结构</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">polar <span class="title">rect_to_polar</span><span class="params">(rect xypos)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_polat</span><span class="params">(polar dapos)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    rect rplace;</span><br><span class="line">    polar pplace;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Enter the x and y values: &quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; rplace.x &gt;&gt; rplace.y) <span class="comment">//cin被用于测试表达式中时，将根据输入是否成功，被转换为bool值true或false</span></span><br><span class="line">    &#123;</span><br><span class="line">        pplace = <span class="built_in">rect_to_polar</span>(rplace);</span><br><span class="line">        <span class="built_in">show_polar</span>(pplace);</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Next two numbers (q to quit): &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Done.\n&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">polar <span class="title">rect_to_polar</span><span class="params">(rect xypos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    polar answer;</span><br><span class="line">    answer.distance =</span><br><span class="line">        <span class="built_in">sqrt</span>( xypos.x*xypos + xypos.y*xypos.y);</span><br><span class="line">    answer.angle = <span class="built_in">atan2</span>(xypos.y,sypos.x);</span><br><span class="line">    <span class="keyword">return</span> answer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_polar</span><span class="params">(polar dapos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">const</span> <span class="type">double</span> Rad_to_deg = <span class="number">57.29577951</span>; <span class="comment">//C++默认处理角度为弧度制</span></span><br><span class="line">    cout &lt;&lt;<span class="string">&quot;distance = &quot;</span> &lt;&lt; dapos.distance;</span><br><span class="line">    cout &lt;&lt;<span class="string">&quot;, angle = &quot;</span> &lt;&lt; dapos.angle * Rad_to_deg;</span><br><span class="line">    cout &lt;&lt;<span class="string">&quot; degrees\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>C++允许甚至鼓励程序员将组建函数刚在独立的文件中。在本例中，可以将rect_to_polar和show_polar写成单独的文件。</p>
+<p>但问题是，这两个函数都用了polar和rect结构。可以将这两个结构复制到两个函数的文件中，但如果要修改的话就要修改两次，非常麻烦。我们可以使用#include来处理这种情况，将结构声明放在头文件中，然后再每一个源代码文件中包含该头文件，这样，要修改结构声明时，只需在头文件中做一次改动即可。</p>
+<p>因此，可以将原来的程序分成三部分。 </p>
+<ul>
+<li>头文件：包含结构声明和使用这些结构的函数的原型。</li>
+<li>源代码文件：包含与结构有关的函数的代码。</li>
+<li>源代码文件：包含调用与结构相关的函数的代码。</li>
+</ul>
+<p>请不要将函数定义或变量声明放到头文件中。这样做对于简单的情况可能是可行的，但通常会引来麻烦。例如，如果在头文件包含一个函数定义，然后在其他两个文件（属于同一个程序）中包含该头文件，则同一个程序中将包含同一个函数的两个定义，除非函数是内联的，否则这将出错。下面列出了头文件中常包含的内容：</p>
+<ul>
+<li>函数原型。 </li>
+<li>使用#define或const定义的符号常量。 </li>
+<li>结构声明。 </li>
+<li>类声明。 </li>
+<li>模板声明。 </li>
+<li>内联函数</li>
+</ul>
+<p>注意，在包含头文件时，我们使 用“coordin.h”，而不是&lt;coodin.h&gt;。如果使用尖括号，则C++编译器会在存储标准头文件的主机系统的文件系统中查找。因此在包含自己的头文件时，应使用引号而不是尖括号。</p>
+<p>对于这个代码，我们可以将其拆分成三个程序。首先是头文件：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// coordin.h -- structure templates and function prototypes</span></span><br><span class="line"><span class="comment">// structure templates</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> COORDIN_H_</span></span><br><span class="line"><span class="comment">/* 在同一个文件中只能将同一个头文件包含一次。为了避免在不知情的情况下降头文件包含多次，可以使用#ifndef指令(if not defined)。下面的代码片段意味着仅当以前没有使用预处理器编译指令#define定义名称COORDINH时，才处理#ifndef和#endif之间的语句 */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> COORDIN_H_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">polar</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> distance;    <span class="comment">// distance from origin</span></span><br><span class="line">    <span class="type">double</span> angle;        <span class="comment">// direction from origin</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">rect</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> x;        <span class="comment">// horizontal distance from origin</span></span><br><span class="line">    <span class="type">double</span> y;        <span class="comment">// vertical distance from origin</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// prototypes</span></span><br><span class="line"><span class="function">polar <span class="title">rect_to_polar</span><span class="params">(rect xypos)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_polar</span><span class="params">(polar dapos)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>然后是main函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file1.cpp -- example of a three-file program</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;coordin.h&quot;</span> <span class="comment">// structure templates, function prototypes</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    rect rplace;</span><br><span class="line">    polar pplace;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Enter the x and y values: &quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; rplace.x &gt;&gt; rplace.y)  <span class="comment">// slick use of cin</span></span><br><span class="line">    &#123;</span><br><span class="line">        pplace = <span class="built_in">rect_to_polar</span>(rplace);</span><br><span class="line">        <span class="built_in">show_polar</span>(pplace);</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Next two numbers (q to quit): &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Bye!\n&quot;</span>;</span><br><span class="line"><span class="comment">// keep window open in MSVC++</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    cin.clear();</span></span><br><span class="line"><span class="comment">    while (cin.get() != &#x27;\n&#x27;)</span></span><br><span class="line"><span class="comment">        continue;</span></span><br><span class="line"><span class="comment">    cin.get();</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其他函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file2.cpp -- contains functions called in file1.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;coordin.h&quot;</span> <span class="comment">// structure templates, function prototypes</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// convert rectangular to polar coordinates</span></span><br><span class="line"><span class="function">polar <span class="title">rect_to_polar</span><span class="params">(rect xypos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    polar answer;</span><br><span class="line"></span><br><span class="line">    answer.distance =</span><br><span class="line">        <span class="built_in">sqrt</span>( xypos.x * xypos.x + xypos.y * xypos.y);</span><br><span class="line">    answer.angle = <span class="built_in">atan2</span>(xypos.y, xypos.x);</span><br><span class="line">    <span class="keyword">return</span> answer;      <span class="comment">// returns a polar structure</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// show polar coordinates, converting angle to degrees</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_polar</span> <span class="params">(polar dapos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">const</span> <span class="type">double</span> Rad_to_deg = <span class="number">57.29577951</span>;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;distance = &quot;</span> &lt;&lt; dapos.distance;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;, angle = &quot;</span> &lt;&lt; dapos.angle * Rad_to_deg;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot; degrees\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="存储持续性、作用域和链接性"><a href="#存储持续性、作用域和链接性" class="headerlink" title="存储持续性、作用域和链接性"></a>存储持续性、作用域和链接性</h2><h3 id="有关内存的知识"><a href="#有关内存的知识" class="headerlink" title="有关内存的知识"></a>有关内存的知识</h3><p>C++11使用四种不同的方案来储存数据，这些方案的区别在于数据保存在内存中的时间。</p>
+<ul>
+<li><p>自动储存持续性：在函数定义中声明的变量，在执行函数或代码块时被创建，执行完后使用的内存被释放。</p>
+</li>
+<li><p>静态储存持续性：在函数定义外定义的变量和使用关键字static定义的变量在程序整个运行过程中都存在。</p>
+<p>要想创建链接性为外部的静态持续变量，必须在代码块的外面声明它；要创建链接性为内部的静态持续变量，必须在代码块的外面声明它，并使用static限定符；要创建没有链接性的静态持续变量，必须在代码块内声明它，并使用static限定符。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> global = <span class="number">1000</span>; <span class="comment">// 整个程序都存在，作用域为整个文件，由于global的链接性为外部，因此可以在程序的其他文件中使用它</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> one_file = <span class="number">50</span>; <span class="comment">// 整个程序都存在，作用域为整个文件，由于one_file的链接性为内部，因此只能在包含上述代码的文件中使用它</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">function1</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">int</span> count = <span class="number">0</span>; <span class="comment">// 整个程序都存在,与llama不同的是，即使在function1( )函数没有被执行时，count也留在内存中</span></span><br><span class="line">    <span class="type">int</span> llama = <span class="number">0</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">function2</span><span class="params">(<span class="type">int</span> q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/image-20220703013114931.png" alt="image-20220703013114931"></p>
+<p>所有的静态持续变量都有下述初始化特征：未被初始化的静态变量的所有位都被设置为0。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="type">int</span> x; <span class="comment">// 零初始化</span></span><br><span class="line"><span class="type">int</span> y = <span class="number">5</span>; <span class="comment">// 常量表达式初始化</span></span><br><span class="line"><span class="type">long</span> z = <span class="number">13</span>*<span class="number">13</span>; <span class="comment">// 常量表达式初始化</span></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> pi = <span class="number">4.0</span>*<span class="built_in">atan</span>(<span class="number">1.0</span>); <span class="comment">// 动态初始化</span></span><br></pre></td></tr></table></figure>
+
+<p>首先，x、y、z和pi被零初始化。然后，编译器计算常量表达式，并将y和z分别初始化为5和169。但要初始化pi，必须调用函数atan()，这需要等到该函数被链接且程序执行时。</p>
+</li>
+<li><p>线程储存持续性(C++11)：如果变量是使用关键字thread_local声明的，则其生命周期与所属的线程一样长。</p>
+</li>
+<li><p>动态储存持续性：用new运算符分配的内存将一直存在，直到使用delete将其释放或程序结束为止。这种内存的存储持续性为动态，有时被称为自由存储（free store）或堆（heap）。</p>
+</li>
+</ul>
+<h3 id="作用域和链接"><a href="#作用域和链接" class="headerlink" title="作用域和链接"></a>作用域和链接</h3><p>在多文件程序中，我们要对不同文件中的变量进行管理，比如有时要一个变量在所有文件中的都可以使用，有时候要一个变量只能在它所属的文件中能被使用。这时候就要了解C++对变量使用的规定。</p>
+<p>C++变量的作用域有多种。作用域为局部的变量只在定义它的代码块中可用。作用域为全局的变量在定义位置到文件结尾之间都可用。自动变量的作用域为局部，静态变量的作用域是全局还是局部取决于它是如何被定义的。</p>
+<p>C++函数的作用域可以是整个类或整个名称空间（包括全局的）， 但不能是局部的（因为不能在代码块内定义函数，如果函数的作用域为局部，则只对它自己是可见的，因此不能被其他函数调用。这样的函数将无法运行）。</p>
+<p>链接性（linkage）描述了名称如何在不同单元间共享。链接性为外部的名称可在文件间共享，链接性为内部的名称只能由一个文件中的函数共享。自动变量的名称没有链接性，因为它们不能共享。</p>
+<h3 id="自动储存持续性"><a href="#自动储存持续性" class="headerlink" title="自动储存持续性"></a>自动储存持续性</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> b = <span class="number">6</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，a的作用域是整个main函数，而b的作用域只有它所属的代码块。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> a = <span class="number">5</span>;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> a = <span class="number">6</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种情况下，代码块中的a为上面a的副本，对代码块中a的操作不会影响代码块外的a。我们说，新的定义隐藏了（hide）以前的定义，新定义可见，旧定义暂时不可见。在程序离开该代码块时，原来的定义又重新可见。</p>
+<h3 id="静态持续性、外部链接性"><a href="#静态持续性、外部链接性" class="headerlink" title="静态持续性、外部链接性"></a>静态持续性、外部链接性</h3><p>链接性为外部的变量通常简称为外部变量，它们的存储持续性为静态，作用域为整个文件。在每个使用外部变量的文件中，都必须声明它，但C++有“单定义规则”，变量只能被定义一次。为满足需求，Ｃ＋＋提出了两种变量声明，一种是定义声明，一种是引用声明。</p>
+<p>引用声明使用关键字extern，且不进行初始化；否则，声明为定义，导致分配存储空间：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> a; <span class="comment">// 定义声明，a的值为0</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> b; <span class="comment">// b在别的地方被声明了，这里是引用声明</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">char</span> gr = <span class="string">&#x27;z&#x27;</span>; <span class="comment">// 因为gr初始化了，所以是定义声明</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要在多个文件中使用外部变量，只需在一个文件中包含该变量的定义（单定义规则），但在使用该变量的其他所有文件中，都必须使用关键字extern声明它。</p>
+<p>既然可以选择使用全局变量或局部变量，那么到底应使用哪种呢？首先，全局变量很有吸引力——因为所有的函数能访问全局变量，因此不用传递参数。但易于访问的代价很大——程序不可靠。计算经验表明，程序越能避免对数据进行不必要的访问，就越能保持数据的完整性。通常情况下，应使用局部变量，应在需要知晓时才传递数据，而不应不加区分地使用全局变量来使数据可用。</p>
+<p>然而，全局变量也有它们的用处。例如，可以让多个函数可以使用同一个数据块（如月份名数组或原子量数组）。外部存储尤其适于表示常量数据，因为这样可以使用关键字const来防止数据被修改。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span> * <span class="type">const</span> months[<span class="number">12</span>] = </span><br><span class="line">&#123;</span><br><span class="line"><span class="string">&quot;January&quot;</span>,<span class="string">&quot;February&quot;</span>,<span class="string">&quot;March&quot;</span>,<span class="string">&quot;April&quot;</span>,<span class="string">&quot;May&quot;</span>,<span class="string">&quot;June&quot;</span>,<span class="string">&quot;July&quot;</span>,<span class="string">&quot;August&quot;</span>,<span class="string">&quot;September&quot;</span>,<span class="string">&quot;October&quot;</span>,<span class="string">&quot;November&quot;</span>,<span class="string">&quot;December&quot;</span></span><br><span class="line">&#125; <span class="comment">// 第一个const防止字符串被更改，第二个const保证所有指针始终指向它最初指向的字符串</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="静态持续性、内部链接性"><a href="#静态持续性、内部链接性" class="headerlink" title="静态持续性、内部链接性"></a>静态持续性、内部链接性</h3><p>将static限定符用于作用域为整个文件的变量时，该变量的链接性将为内部。如果在一个文件中定义了常规外部变量，在另一个文件中还想使用这个变量名，就不能在另一个文件中省略关键字extern。在另一个文件中，静态变量将隐藏常规外部变量：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file1</span></span><br><span class="line"><span class="type">int</span> errors = <span class="number">20</span>; <span class="comment">// 链接性为外部</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// file2</span></span><br><span class="line"><span class="type">static</span> <span class="type">int</span> errors = <span class="number">5</span>; <span class="comment">// 关键字static指出标识符errors的链接性为内部，将隐藏file1中定义的errors</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">froobish</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	cout &lt;&lt; errors; <span class="comment">// 会使用file2中的定义，既errors为5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用外部变量在多文件程序的不同部分之间共享数据；可使用链接性为内部的静态变量在同一个文件中的多个函数之间共享数据。</p>
+<h3 id="静态存储持续性、无链接性"><a href="#静态存储持续性、无链接性" class="headerlink" title="静态存储持续性、无链接性"></a>静态存储持续性、无链接性</h3><p>将static限定符用于在代码块中定义的变量，将导致局部变量的存储持续性为静态的。这也就是说，这个变量只能在该代码块中使用，但它在该代码块不活动的时候也存在。每次函数被调用时，自动变量都会被重置为0，而静态局部变量只会在程序运行时被设置为0，以后在函数调用时，它的值会维持上一次的。因此可以用它做一些多次运行函数后的累加。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">strcount</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *m str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> total = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;\&quot; &lt;&lt; str &lt;&lt; &quot;</span>\ contains <span class="string">&quot;;</span></span><br><span class="line"><span class="string">	while (*str++)</span></span><br><span class="line"><span class="string">		count++；// 当str不到最后一个字符时，函数会一直++count</span></span><br><span class="line"><span class="string">	total += count; // total是局部静态变量，可以在函数每次运行时维持上一次的值以便相加</span></span><br><span class="line"><span class="string">	cout &lt;&lt; count &lt;&lt; &quot;</span> characters\n<span class="string">&quot;</span></span><br><span class="line"><span class="string">	cout &lt;&lt; total &lt;&lt; &quot;</span> characters total\n<span class="string">&quot;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="说明符和限定符"><a href="#说明符和限定符" class="headerlink" title="说明符和限定符"></a>说明符和限定符</h3><h4 id="cv限定符"><a href="#cv限定符" class="headerlink" title="cv限定符"></a>cv限定符</h4><p>cv限定符为const和volatile。volatile表明既是程序代码没有对内存单元进行修改，它的值也可能发生变化。比如将指针指向某个硬件位置，其中包含了来自串行端口的时间或信息，那么硬件（而不是程序）可能对内容进行修改。</p>
+<p>假如程序在几条语句中两次使用某个变量的值，那么编译器可能会将这个值缓存到寄存器中，这会导致变量的值在这两次使用之间不会变化。使用volatile可以取消编译器的这种优化方式。</p>
+<h4 id="mutable"><a href="#mutable" class="headerlink" title="mutable"></a>mutable</h4><p>mutable指出即使解构或类变量为const，其某个成员也能被修改。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">data</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> name[<span class="number">30</span>];</span><br><span class="line">	<span class="keyword">mutable</span> <span class="type">int</span> accesses;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">const</span> data veep = &#123;<span class="string">&quot;Claybourne Clodde&quot;</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="built_in">strcpy</span>(veep.name,<span class="string">&quot;Joye Joux&quot;</span>) <span class="comment">// veep.name是const，非法</span></span><br><span class="line">veep.accesses++; <span class="comment">// veep.accesses用了mutable，合法</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><p>在C++中（C语言不是），默认情况下全局变量的链接性为外部的，但使用const的全局变量的链接性为内部的，就好像加了个static。</p>
+<p>这么做的好处是，可以在头文件中定义const变量，在其他文件使用该头文件。这样在其他文件中都会包含const定义。由于const定义是内部的，所以不会违反单定义规则。这意味着每个文件都有自己的一组常量，而不是所有文件共享一组常量。</p>
+<p>如果想让const的链接性变为外部，则可以使用extern关键字覆盖默认的内部链接性：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="type">const</span> <span class="type">int</span> states = <span class="number">50</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在函数或代码块中声明const时，其作用域为代码块，即仅当程序执行该代码块中的代码时，该常量才是可用的。这意味着在函数或代码块中创建常量时，不必担心其名称与其他地方定义的常量发生冲突。</p>
+<h3 id="函数和链接性"><a href="#函数和链接性" class="headerlink" title="函数和链接性"></a>函数和链接性</h3><p>C++不允许在一个函数中定义另外一个函数，因此所有函数的储存持续性都自动为静态的，即在整个程序执行期间都一直存在。默认情况下函数的链接性为外部，可以在文件间共享。</p>
+<h3 id="存储方案和动态分配"><a href="#存储方案和动态分配" class="headerlink" title="存储方案和动态分配"></a>存储方案和动态分配</h3><p>前面介绍了C++对变量（包括数组和结构）分配内存的方案。但它们不适用于new运算符分配的内存，这种内存被称为动态内存，由new和delete控制，不受作用域和链接性规则控制。因此可以在一个函数中分配动态内存，在另一个函数中将其释放。通常，编译器使用三块独立的内存：静态变量、自动变量、动态存储。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> * p_fees = <span class="keyword">new</span> <span class="type">float</span> [<span class="number">20</span>];</span><br></pre></td></tr></table></figure>
+
+<p>假设float为4字节，由new分配的80个字节将一直保留在内存中，直到使用delete释放。但是当该语句所在的代码块运行完后p_fees指针将会消失。如果希望另一个函数能够使用这80个字节中的内容，则必须将其地址传递或返回给该函数。</p>
+<p>通过在另一个文件中使用下述声明，便可在其中使用该指针：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="type">float</span> * p_fees;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用new运算符初始化"><a href="#使用new运算符初始化" class="headerlink" title="使用new运算符初始化"></a>使用new运算符初始化</h4><p>如果要对内置的标量类型（如int或double）分配储存空间并初始化，可在类型名后面加上初始值，并将其用括号括起：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pi = <span class="keyword">new</span> <span class="built_in">int</span> (<span class="number">6</span>); <span class="comment">// *pi设定为6</span></span><br><span class="line"><span class="type">double</span> * pd = <span class="keyword">new</span> <span class="built_in">double</span> (<span class="number">99.99</span>); <span class="comment">// *pd的值设定为99.99</span></span><br></pre></td></tr></table></figure>
+
+<p>要初始化常规结构或数组，需要使用大括号的列表初始化（C++11）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">where</span> &#123;<span class="type">double</span> x; <span class="type">double</span> y; <span class="type">double</span> z;&#125;;</span><br><span class="line">where * one = <span class="keyword">new</span> where &#123;<span class="number">2.5</span>, <span class="number">5.3</span>, <span class="number">7.2</span>&#125;;</span><br><span class="line"><span class="type">int</span> * ar = <span class="keyword">new</span> <span class="type">int</span> [<span class="number">4</span>] &#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="名称空间"><a href="#名称空间" class="headerlink" title="名称空间"></a>名称空间</h2><h3 id="传统的C-名称空间"><a href="#传统的C-名称空间" class="headerlink" title="传统的C++名称空间"></a>传统的C++名称空间</h3><h4 id="声明区域"><a href="#声明区域" class="headerlink" title="声明区域"></a>声明区域</h4><p>可以在其中进行声明的区域。例如，可以在函数外面声明全局变量，对于这种变量，其声明区域为其声明所在的文件。对于在函数中声明的变量，其声明区域为其声明所在的代码块。</p>
+<h4 id="潜在作用域"><a href="#潜在作用域" class="headerlink" title="潜在作用域"></a>潜在作用域</h4><p>从声明的地方开始，到声明区域的结尾。潜在作用域比声明区域小，这是由于变量必须定义后才能使用。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/07/01/%E5%87%BD%E6%95%B0%E6%8E%A2%E5%B9%BD/" rel="next" title="函数探幽">
+                <i class="fa fa-chevron-left"></i> 函数探幽
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/07/03/%E5%AF%B9%E8%B1%A1%E5%92%8C%E7%B1%BB/" rel="prev" title="对象和类">
+                对象和类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+    
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+    
+
+
+
+    <section class="site-overview sidebar-panel">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <img class="site-author-image" itemprop="image"
+             src="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/透明底logo.png"
+             alt="" />
+        <p class="site-author-name" itemprop="name"></p>
+         
+            <p class="site-description motion-element" itemprop="description"></p>
+        
+      </div>
+      <nav class="site-state motion-element">
+
+        
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/%7C%7C%20archive">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+        
+
+        
+          
+          
+          <div class="site-state-item site-state-categories">
+            <a href="/categories/index.html">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+            </a>
+          </div>
+        
+
+        
+          
+          
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">标签</span>
+            
+          </div>
+        
+
+      </nav>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+          
+            <span class="links-of-author-item">
+              <a href="https://github.com/zhaigong || github" target="_blank" title="GitHub">
+                
+                  <i class="fa fa-fw fa-globe"></i>
+                
+                GitHub
+              </a>
+            </span>
+          
+            <span class="links-of-author-item">
+              <a href="https://zhaigong@163.com || envelope" target="_blank" title="E-Mail">
+                
+                  <i class="fa fa-fw fa-globe"></i>
+                
+                E-Mail
+              </a>
+            </span>
+          
+        
+      </div>
+
+      
+      
+
+      
+      
+
+      <!-- 文件位置：~/blog/themes/next/layout/_custom/sidebar.swig -->
+
+<div id="days"></div>
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("05/23/2022 15:13:14");
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i) {
+    if (i<10) {
+        i="0" + i
+    };
+    return i;
+}
+show_date_time();
+</script>
+
+
+
+    </section>
+    
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E7%8B%AC%E7%BC%96%E8%AF%91"><span class="nav-number">1.</span> <span class="nav-text">单独编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E6%8C%81%E7%BB%AD%E6%80%A7%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%93%BE%E6%8E%A5%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">存储持续性、作用域和链接性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E5%85%B3%E5%86%85%E5%AD%98%E7%9A%84%E7%9F%A5%E8%AF%86"><span class="nav-number">2.1.</span> <span class="nav-text">有关内存的知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E9%93%BE%E6%8E%A5"><span class="nav-number">2.2.</span> <span class="nav-text">作用域和链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%82%A8%E5%AD%98%E6%8C%81%E7%BB%AD%E6%80%A7"><span class="nav-number">2.3.</span> <span class="nav-text">自动储存持续性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%8C%81%E7%BB%AD%E6%80%A7%E3%80%81%E5%A4%96%E9%83%A8%E9%93%BE%E6%8E%A5%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">静态持续性、外部链接性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%8C%81%E7%BB%AD%E6%80%A7%E3%80%81%E5%86%85%E9%83%A8%E9%93%BE%E6%8E%A5%E6%80%A7"><span class="nav-number">2.5.</span> <span class="nav-text">静态持续性、内部链接性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%AD%98%E5%82%A8%E6%8C%81%E7%BB%AD%E6%80%A7%E3%80%81%E6%97%A0%E9%93%BE%E6%8E%A5%E6%80%A7"><span class="nav-number">2.6.</span> <span class="nav-text">静态存储持续性、无链接性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E%E7%AC%A6%E5%92%8C%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">2.7.</span> <span class="nav-text">说明符和限定符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cv%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">2.7.1.</span> <span class="nav-text">cv限定符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mutable"><span class="nav-number">2.7.2.</span> <span class="nav-text">mutable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const"><span class="nav-number">2.7.3.</span> <span class="nav-text">const</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E9%93%BE%E6%8E%A5%E6%80%A7"><span class="nav-number">2.8.</span> <span class="nav-text">函数和链接性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88%E5%92%8C%E5%8A%A8%E6%80%81%E5%88%86%E9%85%8D"><span class="nav-number">2.9.</span> <span class="nav-text">存储方案和动态分配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8new%E8%BF%90%E7%AE%97%E7%AC%A6%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">2.9.1.</span> <span class="nav-text">使用new运算符初始化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.10.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="nav-number">3.</span> <span class="nav-text">名称空间</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E7%BB%9F%E7%9A%84C-%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4"><span class="nav-number">3.1.</span> <span class="nav-text">传统的C++名称空间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%8C%BA%E5%9F%9F"><span class="nav-number">3.1.1.</span> <span class="nav-text">声明区域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BD%9C%E5%9C%A8%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">3.1.2.</span> <span class="nav-text">潜在作用域</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+    
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+</aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">翟公</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'MCwHPb8fKPv5eYeAGMDaPNab-gzGzoHsz',
+        appKey: 'yCq3pvnPntDSwXyf6nJFc4MI',
+        placeholder: '期待您的评论！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击烟花爆炸 -->
+  
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+  <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+  <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+  <!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>

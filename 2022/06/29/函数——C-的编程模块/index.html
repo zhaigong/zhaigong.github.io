@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="函数的基本知识要使用C++函数，必须完成 如下工作：    提供函数定义；   提供函数原型；   调用函数。  可以将函数分成两类：没有返回值的函数和有返回值的函数。没有 返回值的函数被称为void函数，其通用格式如下： 12345void functionName(parameterList) &#x2F;&#x2F;parameterList指定了传递给函数的参数类型和数量&amp;#123;	statement(s)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数——C++的编程模块">
+<meta property="og:url" content="https://zhaigong.github.io/2022/06/29/%E5%87%BD%E6%95%B0%E2%80%94%E2%80%94C-%E7%9A%84%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9D%97/index.html">
+<meta property="og:site_name" content="翟公的博客">
+<meta property="og:description" content="函数的基本知识要使用C++函数，必须完成 如下工作：    提供函数定义；   提供函数原型；   调用函数。  可以将函数分成两类：没有返回值的函数和有返回值的函数。没有 返回值的函数被称为void函数，其通用格式如下： 12345void functionName(parameterList) &#x2F;&#x2F;parameterList指定了传递给函数的参数类型和数量&amp;#123;	statement(s)">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-06-28T16:42:26.000Z">
+<meta property="article:modified_time" content="2022-07-02T15:57:35.000Z">
+<meta property="article:author" content="翟公">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":false,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://zhaigong.github.io/2022/06/29/函数——C-的编程模块/"/>
+
+
+
+
+
+  <title>函数——C++的编程模块 | 翟公的博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">翟公的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个分享技术，生活的地方</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaigong.github.io/2022/06/29/%E5%87%BD%E6%95%B0%E2%80%94%E2%80%94C-%E7%9A%84%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/透明底logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翟公的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">函数——C++的编程模块</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-29T00:42:26+08:00">
+                2022-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/06/29/%E5%87%BD%E6%95%B0%E2%80%94%E2%80%94C-%E7%9A%84%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9D%97/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2022/06/29/%E5%87%BD%E6%95%B0%E2%80%94%E2%80%94C-%E7%9A%84%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9D%97/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="函数的基本知识"><a href="#函数的基本知识" class="headerlink" title="函数的基本知识"></a>函数的基本知识</h2><p>要使用C++函数，必须完成 如下工作： </p>
+<ul>
+<li><input disabled="" type="checkbox"> 提供函数定义； </li>
+<li><input disabled="" type="checkbox"> 提供函数原型； </li>
+<li><input disabled="" type="checkbox"> 调用函数。</li>
+</ul>
+<p>可以将函数分成两类：没有返回值的函数和有返回值的函数。没有 返回值的函数被称为void函数，其通用格式如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">functionName</span><span class="params">(parameterList)</span> <span class="comment">//parameterList指定了传递给函数的参数类型和数量</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">statement</span>(s);</span><br><span class="line">	<span class="keyword">return</span>; <span class="comment">//可选</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">cheers</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Cheers!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有返回值的函数将生成一个值，并将它返回给调用函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typename</span> <span class="title">functionName</span><span class="params">(parameterList)</span> <span class="comment">//C++对于返回值的类型有一定的限制：不能是数组，但可以是其他任何类型——整数、浮点数、指针，甚至可以是结构和对象！</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">statement</span>(s);</span><br><span class="line">	<span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>函数在执行返回语句后结束。如果函数包含多条返回语句（例如， 它们位于不同的if else选项中），则函数在执行遇到的第一条返回语句后结束。</p>
+<h2 id="函数原型和函数调用"><a href="#函数原型和函数调用" class="headerlink" title="函数原型和函数调用"></a>函数原型和函数调用</h2><p>函数原型是一条语句，因此必须以分号结束。获得原型最简单的方法是，复制函数定义中的函数头，并添加分号。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">double</span> <span class="title">cube</span><span class="params">(<span class="type">double</span> x)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>然而，函数原型不要求提供变量名，有类型列表就足够了。对于 cheer( )的原型，该程序只提供了参数类型：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">cheers</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="函数和数组"><a href="#函数和数组" class="headerlink" title="函数和数组"></a>函数和数组</h2><p>将数组元素累加是一项非常常见的任务，因此设计一个完成这项工作的函数很有意义。这样就不必在每次计算数组总和时都编写新的循环了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"><span class="type">int</span> sum = <span class="built_in">sum_arr</span>(cookies, ArSize); <span class="comment">//cookies是数组名，而根据C++规则，cookies是其第一个元素的地址，因此函数传递的是地址</span></span><br><span class="line">...</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum_arr</span><span class="params">(<span class="type">int</span> arr[], <span class="type">int</span> n)</span> <span class="comment">//arr是指针，但在编写函数的其余部分时可以将arr看做是数组，n是数组的长度</span></span></span><br><span class="line"><span class="function"><span class="comment">/* 也可以写作：</span></span></span><br><span class="line"><span class="comment"><span class="function">int sum_arr(int * arr[], int n)</span></span></span><br><span class="line"><span class="comment"><span class="function">因为在C++中，当（且仅当）用于函数头或函数原型中，int *arr和int arr[]的含义才是相同的。它们都意味着arr是一个int指针。*/</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> total = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        total = total + arr[i];</span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>C++将数组名解释为其第一个元素的地址。但这些情况下例外：</p>
+<ul>
+<li>数组声明使用数组名来标记存储位置</li>
+<li>对数组名使用sizeof将得到整个数组的长度（以字节为单位）</li>
+<li>将地址运算符&amp;用于数组名时，将返回整个数组的地址，例如&amp;cookies将返回一个32字节内存块的地址（int长4字节）</li>
+</ul>
+<p>就目前而言，请记住下面两个恒等式：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">arr<span class="comment">[i]</span> == *(arr + i)</span><br><span class="line">&amp;arr<span class="comment">[i]</span> == arr + i</span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// arrfun2.cpp -- functions with an array argument</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> ArSize = <span class="number">8</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum_arr</span><span class="params">(<span class="type">int</span> arr[], <span class="type">int</span> n)</span></span>;</span><br><span class="line"><span class="comment">// use std:: instead of using directive</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> cookies[ArSize] = &#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">16</span>,<span class="number">32</span>,<span class="number">64</span>,<span class="number">128</span> &#125;;</span><br><span class="line">    <span class="comment">//  some systems require preceding int with static to</span></span><br><span class="line">    <span class="comment">//  enable array initialization</span></span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; cookies &lt;&lt; <span class="string">&quot; = array address, &quot;</span>;</span><br><span class="line">    <span class="comment">//  some systems require a type cast: unsigned (cookies)</span></span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="keyword">sizeof</span> cookies &lt;&lt; <span class="string">&quot; = sizeof cookies\n&quot;</span>;</span><br><span class="line">    <span class="type">int</span> sum = <span class="built_in">sum_arr</span>(cookies, ArSize);</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Total cookies eaten: &quot;</span> &lt;&lt; sum &lt;&lt; std::endl;</span><br><span class="line">    sum = <span class="built_in">sum_arr</span>(cookies, <span class="number">3</span>);        <span class="comment">// “欺骗”计算机cookies只有3个元素</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;First three eaters ate &quot;</span> &lt;&lt; sum &lt;&lt; <span class="string">&quot; cookies.\n&quot;</span>;</span><br><span class="line">    sum = <span class="built_in">sum_arr</span>(cookies + <span class="number">4</span>, <span class="number">4</span>);    <span class="comment">// 由于cookies是第一个元素的地址，因此cookies + 4是第5个元素的地址。这条语句将计算数组第5、6、7、8个元素的总和。</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Last four eaters ate &quot;</span> &lt;&lt; sum &lt;&lt; <span class="string">&quot; cookies.\n&quot;</span>;</span><br><span class="line">    <span class="comment">// std::cin.get();</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// return the sum of an integer array</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sum_arr</span><span class="params">(<span class="type">int</span> arr[], <span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> total = <span class="number">0</span>;</span><br><span class="line">    std::cout &lt;&lt; arr &lt;&lt; <span class="string">&quot; = arr, &quot;</span>;</span><br><span class="line">    <span class="comment">// some systems require a type cast: unsigned (arr)</span></span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="keyword">sizeof</span> arr &lt;&lt; <span class="string">&quot; = sizeof arr\n&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        total = total + arr[i];</span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下：</p>
+<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">00000061420FF5F8 =<span class="built_in"> array </span>address, 32 = sizeof cookies</span><br><span class="line">00000061420FF5F8 = arr, 8 = sizeof arr</span><br><span class="line">Total cookies eaten: 255</span><br><span class="line">00000061420FF5F8 = arr, 8 = sizeof arr</span><br><span class="line">First three eaters ate 7 cookies.</span><br><span class="line">00000061420FF608 = arr, 8 = sizeof arr</span><br><span class="line">Last four eaters ate 240 cookies.</span><br></pre></td></tr></table></figure>
+
+<p>程序说明：</p>
+<p>cookies和arr都指向同一个地址，但是sizeof cookies为32，sizeof arr为8。这是由于sizeof cookies是整个数组的长度，而sizeof arr只是指针变量的长度。这也是必须显式传递数组长度，而不能在sum_arr( )中使用 sizeof arr的原因；指针本身并没有指出数组的长度。</p>
+<h2 id="更多数组函数示例"><a href="#更多数组函数示例" class="headerlink" title="更多数组函数示例"></a>更多数组函数示例</h2><p>假设要使用一个数组来记录房地产的价值，将值读入到数组中和显示数组内容，并重新评估 每种房地产的值。</p>
+<h3 id="填充数组"><a href="#填充数组" class="headerlink" title="填充数组"></a>填充数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">fill_array</span><span class="params">(<span class="type">double</span> ar[], <span class="type">int</span> limit)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">double</span> temp;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; limit; i++) <span class="comment">//如果用户输入的都是有效值，则循环将在读取最大数目的值后结束</span></span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter value #&quot;</span> &lt;&lt; (i + <span class="number">1</span>) &lt;&lt; <span class="string">&quot;: &quot;</span>;</span><br><span class="line">        cin &gt;&gt; temp;</span><br><span class="line">        <span class="keyword">if</span> (!cin)    <span class="comment">// bad input</span></span><br><span class="line">        &#123;</span><br><span class="line">            cin.<span class="built_in">clear</span>();</span><br><span class="line">            <span class="keyword">while</span> (cin.<span class="built_in">get</span>() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                <span class="keyword">continue</span>; <span class="comment">//按下回车后结束输入</span></span><br><span class="line">           cout &lt;&lt; <span class="string">&quot;Bad input; input process terminated.\n&quot;</span>;</span><br><span class="line">           <span class="keyword">break</span>; </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (temp &lt; <span class="number">0</span>)     </span><br><span class="line">           <span class="keyword">break</span>; <span class="comment">//可以使用负数来指出输入结束</span></span><br><span class="line">        ar[i] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="显示数组及用const保护数组"><a href="#显示数组及用const保护数组" class="headerlink" title="显示数组及用const保护数组"></a>显示数组及用const保护数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_array</span><span class="params">(<span class="type">const</span> <span class="type">double</span> ar[], <span class="type">int</span> n)</span> <span class="comment">//接受数组名的函数将使用原始数据，将数组ar变为常值数组，确保显示函数不修改原始数组</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Property #&quot;</span> &lt;&lt; (i + <span class="number">1</span>) &lt;&lt; <span class="string">&quot;: $&quot;</span>;</span><br><span class="line">        cout &lt;&lt; ar[i] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改数组"><a href="#修改数组" class="headerlink" title="修改数组"></a>修改数组</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">revalue</span><span class="params">(<span class="type">double</span> r, <span class="type">double</span> ar[], <span class="type">int</span> n)</span> <span class="comment">//该函数只需要修改数组中元素的值，不需要返回值</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        ar[i] *= r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="组合起来："><a href="#组合起来：" class="headerlink" title="组合起来："></a>组合起来：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// arrfun3.cpp -- array functions and const</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> Max = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// function prototypes</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">fill_array</span><span class="params">(<span class="type">double</span> ar[], <span class="type">int</span> limit)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_array</span><span class="params">(<span class="type">const</span> <span class="type">double</span> ar[], <span class="type">int</span> n)</span></span>;  <span class="comment">// don&#x27;t change data</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">revalue</span><span class="params">(<span class="type">double</span> r, <span class="type">double</span> ar[], <span class="type">int</span> n)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">double</span> properties[Max];</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> size = <span class="built_in">fill_array</span>(properties, Max);</span><br><span class="line">    <span class="built_in">show_array</span>(properties, size);</span><br><span class="line">    <span class="keyword">if</span> (size &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter revaluation factor: &quot;</span>;</span><br><span class="line">        <span class="type">double</span> factor;</span><br><span class="line">        <span class="keyword">while</span> (!(cin &gt;&gt; factor))    <span class="comment">// bad input</span></span><br><span class="line">        &#123;</span><br><span class="line">            cin.<span class="built_in">clear</span>();</span><br><span class="line">            <span class="keyword">while</span> (cin.<span class="built_in">get</span>() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">           cout &lt;&lt; <span class="string">&quot;Bad input; Please enter a number: &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">revalue</span>(factor, properties, size);</span><br><span class="line">        <span class="built_in">show_array</span>(properties, size);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Done.\n&quot;</span>;</span><br><span class="line">    <span class="comment">// cin.get();</span></span><br><span class="line">    <span class="comment">// cin.get();</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">fill_array</span><span class="params">(<span class="type">double</span> ar[], <span class="type">int</span> limit)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">double</span> temp;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; limit; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Enter value #&quot;</span> &lt;&lt; (i + <span class="number">1</span>) &lt;&lt; <span class="string">&quot;: &quot;</span>;</span><br><span class="line">        cin &gt;&gt; temp;</span><br><span class="line">        <span class="keyword">if</span> (!cin)    <span class="comment">// bad input</span></span><br><span class="line">        &#123;</span><br><span class="line">            cin.<span class="built_in">clear</span>();</span><br><span class="line">            <span class="keyword">while</span> (cin.<span class="built_in">get</span>() != <span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">           cout &lt;&lt; <span class="string">&quot;Bad input; input process terminated.\n&quot;</span>;</span><br><span class="line">           <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (temp &lt; <span class="number">0</span>)     <span class="comment">// signal to terminate</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        ar[i] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// the following function can use, but not alter,</span></span><br><span class="line"><span class="comment">// the array whose address is ar</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_array</span><span class="params">(<span class="type">const</span> <span class="type">double</span> ar[], <span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Property #&quot;</span> &lt;&lt; (i + <span class="number">1</span>) &lt;&lt; <span class="string">&quot;: $&quot;</span>;</span><br><span class="line">        cout &lt;&lt; ar[i] &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// multiplies each element of ar[] by r</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">revalue</span><span class="params">(<span class="type">double</span> r, <span class="type">double</span> ar[], <span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        ar[i] *= r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="指针和const"><a href="#指针和const" class="headerlink" title="指针和const"></a>指针和const</h2><p>可以用两种不同的方式将const关键字用于指针。第一种方法是让指针指向一个常量对象，这样可以防止使用该指针来修 改所指向的值，第二种方法是将指针本身声明为常量，这样可以防止改变指针指向的位置。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> age = <span class="number">39</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> * pt = &amp;age; <span class="comment">//pt指向一个const int（这里为39），因此不能使用pt来修改这个值</span></span><br><span class="line">*pt = <span class="number">20</span>; <span class="comment">//不合法</span></span><br><span class="line">age = <span class="number">20</span>; <span class="comment">//合法；pt的声明并不意味着它指向的值实际上就是一个常量，而只是意味着对pt而言，这个值是常量。可以直接通过age变量来修改age的值，但不能使用pt指针来修改它</span></span><br></pre></td></tr></table></figure>
+
+<p>以前我们将常规变量的地址赋给常规指针，而这里将常规变量的地 址赋给指向const的指针。因此还有两种可能：将const变量的地址赋给指向const的指针、将const的地址赋给常规指针。其中第一种可行，第二种不可行：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">float</span> g_earth = <span class="number">9.80</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">float</span> * pe = &amp;g_earth; <span class="comment">//合法</span></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">float</span> g_moon = <span class="number">1.63</span>;</span><br><span class="line"><span class="type">float</span> * pm = &amp;g_moon; <span class="comment">//不合法。试想一下，如果将g_moon的地址赋给pm，则可以使用pm来修改g_moon的值，这使得g_moon的const状态很荒谬</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="将C-风格字符串作为参数的函数"><a href="#将C-风格字符串作为参数的函数" class="headerlink" title="将C-风格字符串作为参数的函数"></a>将C-风格字符串作为参数的函数</h2><p>假设要将字符串作为参数传递给函数，则表示字符串的方式有三种：</p>
+<ul>
+<li>char数组；</li>
+<li> 用引号括起的字符串常量（也称字符串字面值）； </li>
+<li>被设置为字符串的地址的char指针。</li>
+</ul>
+<p>C-风格字符串与常规char数组之间的一个重要区别是，字符串有内置的结束字符（包含字符，但不以空值字符结尾的char数组只是数组，而不是字符串）。这意味着不必将字符串长度作为参数传递给函数，而函数可以使用循环依次检查字符串中的每个字符，直到遇到结尾的空值字符为止。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">unsigned</span> <span class="type">int</span> <span class="title">c_in_str</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * str, <span class="type">char</span> ch)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (*str)        <span class="comment">// quit when *str is &#x27;\0&#x27;</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (*str == ch)</span><br><span class="line">            count++; <span class="comment">// 可用来统计字母中有多少个m（或其他）字母</span></span><br><span class="line">        str++;        <span class="comment">// move pointer to next char</span></span><br><span class="line">    &#125; <span class="comment">//该函数本身演示了处理字符串中字符的标准方式</span></span><br><span class="line">    <span class="keyword">return</span> count; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="返回C-风格字符串的函数"><a href="#返回C-风格字符串的函数" class="headerlink" title="返回C-风格字符串的函数"></a>返回C-风格字符串的函数</h2><p>函数无法返回一 个字符串，但可以返回字符串的地址，这样做的效率更高。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">char</span> * <span class="title">buildstr</span><span class="params">(<span class="type">char</span> c, <span class="type">int</span> n)</span> <span class="comment">// 接受一个字符和一个数字</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> * pstr = <span class="keyword">new</span> <span class="type">char</span>[n + <span class="number">1</span>]; <span class="comment">// 使用new创建一个长度与数字参数相等的字符串</span></span><br><span class="line">    pstr[n] = <span class="string">&#x27;\0&#x27;</span>;         <span class="comment">// terminate string</span></span><br><span class="line">    <span class="keyword">while</span> (n-- &gt; <span class="number">0</span>)</span><br><span class="line">        pstr[n] = c;        <span class="comment">// fill rest of string</span></span><br><span class="line">    <span class="keyword">return</span> pstr; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>变量pstr的作用域为buildstr函数内，因此该函数结束时，pstr（而不是字符串）使用的内存将被释放。但由于函数返回了pstr的值，因此程序仍可以通过main( )中的指针ps来访问新建的字符串。</p>
+<h2 id="函数和结构"><a href="#函数和结构" class="headerlink" title="函数和结构"></a>函数和结构</h2><h3 id="传递结构"><a href="#传递结构" class="headerlink" title="传递结构"></a>传递结构</h3><p>例：将x小时x分钟的两个时间相加</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// travel.cpp -- using structures with functions</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">travel_time</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> hours;</span><br><span class="line">    <span class="type">int</span> mins;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> Mins_per_hr = <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">travel_time <span class="title">sum</span><span class="params">(travel_time t1, travel_time t2)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_time</span><span class="params">(travel_time t)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    travel_time day1 = &#123;<span class="number">5</span>, <span class="number">45</span>&#125;;    <span class="comment">// 5 hrs, 45 min</span></span><br><span class="line">    travel_time day2 = &#123;<span class="number">4</span>, <span class="number">55</span>&#125;;    <span class="comment">// 4 hrs, 55 min</span></span><br><span class="line"></span><br><span class="line">    travel_time trip = <span class="built_in">sum</span>(day1, day2);</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Two-day total: &quot;</span>;</span><br><span class="line">    <span class="built_in">show_time</span>(trip);</span><br><span class="line"></span><br><span class="line">    travel_time day3= &#123;<span class="number">4</span>, <span class="number">32</span>&#125;;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Three-day total: &quot;</span>;</span><br><span class="line">    <span class="built_in">show_time</span>(<span class="built_in">sum</span>(trip, day3)); <span class="comment">// 由于sum( )函数返回travel_time结构，因此可以将其用作show_time( )函数的参数。</span></span><br><span class="line">    <span class="comment">// cin.get();</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">travel_time <span class="title">sum</span><span class="params">(travel_time t1, travel_time t2)</span> <span class="comment">// travel_time就像是一个标准的类型名，可被用来声明变量、函数的返回类型和函数的参数类型</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    travel_time total;</span><br><span class="line"></span><br><span class="line">    total.mins = (t1.mins + t2.mins) % Mins_per_hr;</span><br><span class="line">    total.hours = t1.hours + t2.hours +</span><br><span class="line">                 (t1.mins + t2.mins) / Mins_per_hr;</span><br><span class="line">    <span class="keyword">return</span> total;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_time</span><span class="params">(travel_time t)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    cout &lt;&lt; t.hours &lt;&lt; <span class="string">&quot; hours, &quot;</span></span><br><span class="line">         &lt;&lt; t.mins &lt;&lt; <span class="string">&quot; minutes\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>例：将用结构表示的x，y坐标转换为极坐标</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">polar</span> <span class="comment">// 极坐标结构</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> distance;</span><br><span class="line">    <span class="type">double</span> angle;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">rect</span> <span class="comment">// 平面直角坐标系结构</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> x;</span><br><span class="line">    <span class="type">double</span> y;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">polar <span class="title">rect_to_polar</span><span class="params">(rect xypos)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_polat</span><span class="params">(polar dapos)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    rect rplace;</span><br><span class="line">    polar pplace;</span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Enter the x and y values: &quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> (cin &gt;&gt; rplace.x &gt;&gt; rplace.y) <span class="comment">//cin被用于测试表达式中时，将根据输入是否成功，被转换为bool值true或false</span></span><br><span class="line">    &#123;</span><br><span class="line">        pplace = <span class="built_in">rect_to_polar</span>(rplace);</span><br><span class="line">        <span class="built_in">show_polar</span>(pplace);</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Next two numbers (q to quit): &quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Done.\n&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">polar <span class="title">rect_to_polar</span><span class="params">(rect xypos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    polar answer;</span><br><span class="line">    answer.distance =</span><br><span class="line">        <span class="built_in">sqrt</span>( xypos.x*xypos + xypos.y*xypos.y);</span><br><span class="line">    answer.angle = <span class="built_in">atan2</span>(xypos.y,sypos.x);</span><br><span class="line">    <span class="keyword">return</span> answer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_polar</span><span class="params">(polar dapos)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">const</span> <span class="type">double</span> Rad_to_deg = <span class="number">57.29577951</span>; <span class="comment">//C++默认处理角度为弧度制</span></span><br><span class="line">    cout &lt;&lt;<span class="string">&quot;distance = &quot;</span> &lt;&lt; dapos.distance;</span><br><span class="line">    cout &lt;&lt;<span class="string">&quot;, angle = &quot;</span> &lt;&lt; dapos.angle * Rad_to_deg;</span><br><span class="line">    cout &lt;&lt;<span class="string">&quot; degrees\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="传递结构的地址"><a href="#传递结构的地址" class="headerlink" title="传递结构的地址"></a>传递结构的地址</h3><p>假设要传递结构的地址而不是整个结构以节省时间和空间，则需要重新编写前面的函数，使用指向结构的指针。首先来看一看如何重新编写show_polar( )函数。需要修改三个地方：</p>
+<ul>
+<li>调用函数时，将结构的地址（&amp;pplace）而不是结构本身（pplace） 传递给它； </li>
+<li>将形参声明为指向polar的指针，即polar *类型。由于函数不应该修改结构，因此使用了const修饰符； </li>
+<li>由于形参是指针而不是结构，因此应间接成员运算符（-&gt;），而不是成员运算符（句点）。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">show_polar</span> <span class="params">(<span class="type">const</span> polar * pda)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    <span class="type">const</span> <span class="type">double</span> Rad_to_deg = <span class="number">57.29577951</span>; <span class="comment">//C++默认处理角度为弧度制</span></span><br><span class="line">    cout &lt;&lt;<span class="string">&quot;distance = &quot;</span> &lt;&lt; pda-&gt;distance;</span><br><span class="line">    cout &lt;&lt;<span class="string">&quot;, angle = &quot;</span> &lt;&lt; pda-&gt;angle * Rad_to_deg;</span><br><span class="line">    cout &lt;&lt;<span class="string">&quot; degrees\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">rect_to_polar</span><span class="params">(<span class="type">const</span> rect * psy, polar * pda)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    polar answer;</span><br><span class="line">    pda-&gt;distance =</span><br><span class="line">        <span class="built_in">sqrt</span>( pxy-&gt;x*pxy-&gt;x + pxy-&gt;y*pxy-&gt;y);</span><br><span class="line">    pda-&gt;angle = <span class="built_in">atan2</span>(pda-&gt;y,pda-&gt;x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="函数和string对象"><a href="#函数和string对象" class="headerlink" title="函数和string对象"></a>函数和string对象</h2><p>如果需要多个字符串， 可以声明一个string对象数组，而不是二维char数组。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// topfive.cpp -- handling an array of string objects</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> SIZE = <span class="number">5</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">display</span><span class="params">(<span class="type">const</span> string sa[], <span class="type">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    string list[SIZE];     <span class="comment">// an array holding 5 string object</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Enter your &quot;</span> &lt;&lt; SIZE &lt;&lt; <span class="string">&quot; favorite astronomical sights:\n&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; SIZE; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        cout &lt;&lt; i + <span class="number">1</span> &lt;&lt; <span class="string">&quot;: &quot;</span>;</span><br><span class="line">        <span class="built_in">getline</span>(cin,list[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Your list:\n&quot;</span>;</span><br><span class="line">    <span class="built_in">display</span>(list, SIZE);</span><br><span class="line">    <span class="comment">// cin.get();</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">display</span><span class="params">(<span class="type">const</span> string sa[], <span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        cout &lt;&lt; i + <span class="number">1</span> &lt;&lt; <span class="string">&quot;: &quot;</span> &lt;&lt; sa[i] &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>C++函数有一种有趣的特点——可 以调用自己（然而，与C语言不同的是，C++不允许main( )调用自己），这种功能被称为递归。</p>
+<p>如果递归函数调用自己，则被调用的函数也将调用自己，这将无限 循环下去，除非代码中包含终止调用链的内容。通常的方法将递归调用 放在if语句中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">recurs</span><span class="params">(argumentlist)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">statements1</span></span><br><span class="line"><span class="function">	<span class="title">if</span><span class="params">(test)</span></span></span><br><span class="line"><span class="function">		<span class="title">recurs</span><span class="params">(arguments)</span></span></span><br><span class="line"><span class="function">	statements2</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// recur.cpp -- using recursion</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">countdown</span><span class="params">(<span class="type">int</span> n)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">countdown</span>(<span class="number">4</span>);           <span class="comment">// call the recursive function</span></span><br><span class="line">    <span class="comment">// std::cin.get();</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">countdown</span><span class="params">(<span class="type">int</span> n)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Counting down ... &quot;</span> &lt;&lt; n &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">if</span> (n &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="built_in">countdown</span>(n<span class="number">-1</span>);     <span class="comment">// function calls itself</span></span><br><span class="line">    cout &lt;&lt; n &lt;&lt; <span class="string">&quot;: Kaboom!\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意，每个递归调用都创建自己的一套变量，因此当程序到达第5次调用时，将有5个独立的n变量，其中每个变量的值都不同。</p>
+<p>在需要将一项工作不断分为两项较小的、类似的工作时，递归非常有用。例如，请考虑使用这种方法来绘制标尺的情况。标出两端，找到中点并将其标出。然后将同样的操作用于标尺的左半部分和右半部分。如果要进一步细分，可将同样的操作用于当前的每一部分。递归方法有时被称为分而治之策略（divide-and-conquer strategy）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ruler.cpp -- using recursion to subdivide a ruler</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> Len = <span class="number">66</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> Divs = <span class="number">6</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">subdivide</span><span class="params">(<span class="type">char</span> ar[], <span class="type">int</span> low, <span class="type">int</span> high, <span class="type">int</span> level)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">char</span> ruler[Len];</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt; Len - <span class="number">2</span>; i++)</span><br><span class="line">        ruler[i] = <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    ruler[Len - <span class="number">1</span>] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">    <span class="type">int</span> max = Len - <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> min = <span class="number">0</span>;</span><br><span class="line">    ruler[min] = ruler[max] = <span class="string">&#x27;|&#x27;</span>;</span><br><span class="line">    std::cout &lt;&lt; ruler &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= Divs; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">subdivide</span>(ruler,min,max, i);</span><br><span class="line">        std::cout &lt;&lt; ruler &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt; Len - <span class="number">2</span>; j++)</span><br><span class="line">            ruler[j] = <span class="string">&#x27; &#x27;</span>;  <span class="comment">// reset to blank ruler</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// std::cin.get();</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">subdivide</span><span class="params">(<span class="type">char</span> ar[], <span class="type">int</span> low, <span class="type">int</span> high, <span class="type">int</span> level)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (level == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> mid = (high + low) / <span class="number">2</span>;</span><br><span class="line">    ar[mid] = <span class="string">&#x27;|&#x27;</span>;</span><br><span class="line">    <span class="built_in">subdivide</span>(ar, low, mid, level - <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">subdivide</span>(ar, mid, high, level - <span class="number">1</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果要求的递归层次很多，这种递归方式将是一种糟糕的选择；然而，如果递归层次较少，这将是一种精致而简单的选择。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/06/27/%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E5%92%8C%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6/" rel="next" title="分支语句和逻辑运算符">
+                <i class="fa fa-chevron-left"></i> 分支语句和逻辑运算符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/07/01/%E5%87%BD%E6%95%B0%E6%8E%A2%E5%B9%BD/" rel="prev" title="函数探幽">
+                函数探幽 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+<div class="sidebar-toggle">
+  <div class="sidebar-toggle-line-wrap">
+    <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+    <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+  </div>
+</div>
+
+<aside id="sidebar" class="sidebar">
+  <div class="sidebar-inner">
+
+    
+    
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+    
+
+
+
+    <section class="site-overview sidebar-panel">
+      <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <img class="site-author-image" itemprop="image"
+             src="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/透明底logo.png"
+             alt="" />
+        <p class="site-author-name" itemprop="name"></p>
+         
+            <p class="site-description motion-element" itemprop="description"></p>
+        
+      </div>
+      <nav class="site-state motion-element">
+
+        
+          <div class="site-state-item site-state-posts">
+            <a href="/archives/%7C%7C%20archive">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+        
+
+        
+          
+          
+          <div class="site-state-item site-state-categories">
+            <a href="/categories/index.html">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+            </a>
+          </div>
+        
+
+        
+          
+          
+          <div class="site-state-item site-state-tags">
+            
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">标签</span>
+            
+          </div>
+        
+
+      </nav>
+
+      
+
+      <div class="links-of-author motion-element">
+        
+          
+            <span class="links-of-author-item">
+              <a href="https://github.com/zhaigong || github" target="_blank" title="GitHub">
+                
+                  <i class="fa fa-fw fa-globe"></i>
+                
+                GitHub
+              </a>
+            </span>
+          
+            <span class="links-of-author-item">
+              <a href="https://zhaigong@163.com || envelope" target="_blank" title="E-Mail">
+                
+                  <i class="fa fa-fw fa-globe"></i>
+                
+                E-Mail
+              </a>
+            </span>
+          
+        
+      </div>
+
+      
+      
+
+      
+      
+
+      <!-- 文件位置：~/blog/themes/next/layout/_custom/sidebar.swig -->
+
+<div id="days"></div>
+<script>
+function show_date_time(){
+    window.setTimeout("show_date_time()", 1000);
+    BirthDay=new Date("05/23/2022 15:13:14");
+    today=new Date();
+    timeold=(today.getTime()-BirthDay.getTime());
+    sectimeold=timeold/1000
+    secondsold=Math.floor(sectimeold);
+    msPerDay=24*60*60*1000
+    e_daysold=timeold/msPerDay
+    daysold=Math.floor(e_daysold);
+    e_hrsold=(e_daysold-daysold)*24;
+    hrsold=setzero(Math.floor(e_hrsold));
+    e_minsold=(e_hrsold-hrsold)*60;
+    minsold=setzero(Math.floor((e_hrsold-hrsold)*60));
+    seconds=setzero(Math.floor((e_minsold-minsold)*60));
+    document.getElementById('days').innerHTML="已运行 "+daysold+" 天 "+hrsold+" 小时 "+minsold+" 分 "+seconds+" 秒";
+}
+function setzero(i) {
+    if (i<10) {
+        i="0" + i
+    };
+    return i;
+}
+show_date_time();
+</script>
+
+
+
+    </section>
+    
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">函数的基本知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">函数原型和函数调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E6%95%B0%E7%BB%84"><span class="nav-number">3.</span> <span class="nav-text">函数和数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E6%95%B0%E7%BB%84%E5%87%BD%E6%95%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.</span> <span class="nav-text">更多数组函数示例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A1%AB%E5%85%85%E6%95%B0%E7%BB%84"><span class="nav-number">4.1.</span> <span class="nav-text">填充数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%95%B0%E7%BB%84%E5%8F%8A%E7%94%A8const%E4%BF%9D%E6%8A%A4%E6%95%B0%E7%BB%84"><span class="nav-number">4.2.</span> <span class="nav-text">显示数组及用const保护数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E7%BB%84"><span class="nav-number">4.3.</span> <span class="nav-text">修改数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E8%B5%B7%E6%9D%A5%EF%BC%9A"><span class="nav-number">4.4.</span> <span class="nav-text">组合起来：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8Cconst"><span class="nav-number">5.</span> <span class="nav-text">指针和const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86C-%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">6.</span> <span class="nav-text">将C-风格字符串作为参数的函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9EC-%E9%A3%8E%E6%A0%BC%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text">返回C-风格字符串的函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%93%E6%9E%84"><span class="nav-number">8.</span> <span class="nav-text">函数和结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92%E7%BB%93%E6%9E%84"><span class="nav-number">8.1.</span> <span class="nav-text">传递结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92%E7%BB%93%E6%9E%84%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="nav-number">8.2.</span> <span class="nav-text">传递结构的地址</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%92%8Cstring%E5%AF%B9%E8%B1%A1"><span class="nav-number">9.</span> <span class="nav-text">函数和string对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">10.</span> <span class="nav-text">递归</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+    
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+</aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love" id="heart">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">翟公</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'MCwHPb8fKPv5eYeAGMDaPNab-gzGzoHsz',
+        appKey: 'yCq3pvnPntDSwXyf6nJFc4MI',
+        placeholder: '期待您的评论！',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击烟花爆炸 -->
+  
+  <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+  <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+  <script type="text/javascript" src="/js/src/fireworks.js"></script>
+  
+  <!-- 代码块复制功能 -->
+<script type="text/javascript" src="/js/src/clipboard.min.js"></script>  
+<script type="text/javascript" src="/js/src/clipboard-use.js"></script>
+</body>
+</html>
