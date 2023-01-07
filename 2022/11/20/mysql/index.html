@@ -77,7 +77,7 @@
 
 
 
-  <meta name="keywords" content="C++小程序," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -88,17 +88,16 @@
 
 
 
-<meta name="description" content="声明和初始化指针 &amp;：地址运算符。如果home是一个变量，则&amp;home是它的地址。  *：间接值&#x2F;解除引用运算符。如果address是一个地址，则 *address是该地址存的值。可以说， *是&amp;的逆运算。  可以使用 int *address来申明指针，这里的address必须是指针，而 *address不是指针 例如ted是一个double变量，请声明一个指向ted的指">
+<meta name="description" content="登录：sudo mysql -r -p 展示数据库：show databases; 创建数据库：create database xxx; 使用数据库：use xxx; 创建表格：create table yyy( id int, name varchar(255), region varchar(255) ); 展示表格：show tables; 描述表格：describe yyy; 向表格写入数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="指针">
-<meta property="og:url" content="https://zhaigong.github.io/2022/06/23/%E6%8C%87%E9%92%88/index.html">
+<meta property="og:title" content="mysql">
+<meta property="og:url" content="https://zhaigong.github.io/2022/11/20/mysql/index.html">
 <meta property="og:site_name" content="翟公的博客">
-<meta property="og:description" content="声明和初始化指针 &amp;：地址运算符。如果home是一个变量，则&amp;home是它的地址。  *：间接值&#x2F;解除引用运算符。如果address是一个地址，则 *address是该地址存的值。可以说， *是&amp;的逆运算。  可以使用 int *address来申明指针，这里的address必须是指针，而 *address不是指针 例如ted是一个double变量，请声明一个指向ted的指">
+<meta property="og:description" content="登录：sudo mysql -r -p 展示数据库：show databases; 创建数据库：create database xxx; 使用数据库：use xxx; 创建表格：create table yyy( id int, name varchar(255), region varchar(255) ); 展示表格：show tables; 描述表格：describe yyy; 向表格写入数">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-06-23T08:54:24.000Z">
-<meta property="article:modified_time" content="2022-07-04T07:10:48.000Z">
+<meta property="article:published_time" content="2022-11-20T02:51:00.000Z">
+<meta property="article:modified_time" content="2022-11-20T03:08:26.949Z">
 <meta property="article:author" content="翟公">
-<meta property="article:tag" content="C++小程序">
 <meta name="twitter:card" content="summary">
 
 
@@ -130,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="https://zhaigong.github.io/2022/06/23/指针/"/>
+  <link rel="canonical" href="https://zhaigong.github.io/2022/11/20/mysql/"/>
 
 
 
 
 
-  <title>指针 | 翟公的博客</title>
+  <title>mysql | 翟公的博客</title>
   
 
 
@@ -307,7 +306,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaigong.github.io/2022/06/23/%E6%8C%87%E9%92%88/">
+    <link itemprop="mainEntityOfPage" href="https://zhaigong.github.io/2022/11/20/mysql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -324,7 +323,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">指针</h1>
+          <h1 class="post-title" itemprop="name headline">mysql</h1>
         
 
         <div class="post-meta">
@@ -336,8 +335,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-23T16:54:24+08:00">
-                2022-06-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-11-20T10:51:00+08:00">
+                2022-11-20
               </time>
             
 
@@ -347,28 +346,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index">
-                    <span itemprop="name">C++</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -377,8 +354,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2022/06/23/%E6%8C%87%E9%92%88/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2022/06/23/%E6%8C%87%E9%92%88/" itemprop="commentCount"></span>
+                <a href="/2022/11/20/mysql/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2022/11/20/mysql/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -442,104 +419,22 @@
       
 
       
-        <h2 id="声明和初始化指针"><a href="#声明和初始化指针" class="headerlink" title="声明和初始化指针"></a>声明和初始化指针</h2><ol>
-<li><p>&amp;：地址运算符。如果home是一个变量，则&amp;home是它的地址。</p>
-</li>
-<li><p>*：间接值/解除引用运算符。如果address是一个地址，则 *address是该地址存的值。可以说， *是&amp;的逆运算。</p>
-</li>
-<li><p>可以使用 int *address来申明指针，这里的address必须是指针，而 *address不是指针</p>
-<p>例如ted是一个double变量，请声明一个指向ted的指针，并使用该指针来显示ted的值：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> * pd = &amp;ted;</span><br><span class="line">cout &lt;&lt; *pd &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br></pre></td></tr></table></figure></li>
-<li><p>在使用*xxx之前，要先给xx一个确定的，适当的地址</p>
-</li>
-<li><p>赋值给指针不能直接用整数，应该使用</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> * pt;</span><br><span class="line">pt = (<span class="type">int</span> *) <span class="number">0xB80000000</span>;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="使用new来分配内存"><a href="#使用new来分配内存" class="headerlink" title="使用new来分配内存"></a>使用new来分配内存</h2><ol>
-<li><p>指针真正的用武之地在于，在运行阶段分配未命名的内存以存储值。在这种情况下，只能通过指针来访问内存。</p>
-</li>
-<li><p>new将找到一个长度正确的内存块，并返回该内存块的地址。程序员的责任是将该地址赋给一个指针。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> * pn = <span class="keyword">new</span> <span class="type">int</span>;<span class="comment">//new int告诉程序，需要适合存储int的内存。new运算符根据类型来确定需要多少字节的内存。然后，它找到这样的内存，并返回其地址。 我们说pn指向一个数据对象。</span></span><br><span class="line"><span class="comment">//为一个数据对象（可以是结构，也可以是基本类型）获得并指定分配内存的通用格式如下：</span></span><br><span class="line">Typename * pointer_name = <span class="keyword">new</span> Typename;</span><br><span class="line"><span class="type">double</span> * pd = <span class="keyword">new</span> <span class="type">double</span>;</span><br><span class="line">*pd = <span class="number">100000.01</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> higgens;</span><br><span class="line"><span class="type">int</span> * pt = &amp;higgens;<span class="comment">//这种情况下可以通过名称higgens来访问int；而第一种只能通过指针访问</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="使用delete来释放内存"><a href="#使用delete来释放内存" class="headerlink" title="使用delete来释放内存"></a>使用delete来释放内存</h2><ol>
-<li><p>delete运算符，使得在使用完内存后，能够将其归还给内存池，这是通向最有效地使用内存的关键一 步。归还或释放（free）的内存可供程序的其他部分使用。</p>
-</li>
-<li><p>使用delete 时，后面要加上指向内存块的指针（这些内存块最初是用new分配的）：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> * ps =<span class="keyword">new</span> <span class="type">int</span>;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">delete</span> ps;<span class="comment">//这将释放ps指向的内存，但不会删除指针ps本身。</span></span><br></pre></td></tr></table></figure></li>
-<li><p>一定要配对地使用new和delete；否则 将发生内存泄漏（memory leak），也就是说，被分配的内存再也无法使用了。如果内存泄漏严重，则程序将由于不断寻找更多内存而终止。</p>
-</li>
-<li><p>不要尝试释放已经释放的内存块，C++标准指出，这样做的结果将是不确定的，这意味着什么情况都可能发生。另外，不能使用delete来释放声明变量所获得的内存</p>
-</li>
-<li><p>注意，使用delete的关键在于，将它用于new分配的内存。这并不意味着要使用用于new的指针，而是用于new的地址：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> * ps = <span class="keyword">new</span> <span class="type">int</span>;</span><br><span class="line"><span class="type">int</span> * pq =  ps;</span><br><span class="line"><span class="keyword">delete</span> pq;<span class="comment">//这里不管delete pq还是ps，本质上都是释放这个地址的内存</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="使用new来创建动态数组"><a href="#使用new来创建动态数组" class="headerlink" title="使用new来创建动态数组"></a>使用new来创建动态数组</h2><ol>
-<li><p>通常，对于大型数据（如数组、字符串和结构），应使用new，这正是new的用武之地。</p>
-</li>
-<li><p>在编译时给数组分配内存被称为静态联编（static binding），意味着数组是在编译时加入到程序中的。使用new时，如果在运行阶段需要数组，则创建它；如果不需要，则不创建。还可以在程序运行时选择数组的长度。这被称为<em>动态联编（dynamic binding）</em>，意味着数组是在程序运行时创建的。使用静态联编时，必须在编写程序时指定数组的长度；使用动态联编时，程序将在运行时确定数组的长度。</p>
-</li>
-<li><p>在C++中，创建动态数组很容易；只要将数组的元素类型和元素数目告诉new即可。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> * psome = <span class="keyword">new</span> <span class="type">int</span> [<span class="number">3</span>];<span class="comment">//new运算符返回第一个元素的地址，这里地址被赋给指针psome。该语句创建指针psome，它指向包含10个int值的内存块中的第1个元素。只要把指针当做数组名使用即可。</span></span><br><span class="line">psome[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">psome[<span class="number">1</span>]=<span class="number">2</span>;<span class="comment">//C++编译器将该表达式看作是*（psome+ 1），这意味着先计算数组第2个元素的地址，然后找到存储在那里的值。</span></span><br><span class="line"><span class="comment">//对数组应用sizeof运算符得到的是数组的长度，而对指针应用sizeof得到的是指针的长度</span></span><br><span class="line">psome[<span class="number">2</span>]=<span class="number">3</span>;</span><br><span class="line">psome = psome + <span class="number">1</span>;<span class="comment">//不能修改数组名的值。但指针是变量，因此可以修改它的值。psome+1后psome[0]就是数组的第二个值，由于psome是int，因此psome的数字地址将增加8</span></span><br><span class="line"><span class="keyword">delete</span> [] psome;<span class="comment">//对于使用new创建的数组应使用这种格式的delete释放。方括号告诉程序应释放整个数组，而不仅仅是指针指向的元素。</span></span><br></pre></td></tr></table></figure>
-
-<p>假设treacle是一个包含10个元素的float数组，请声明一个指向 treacle的第一个元素的指针：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> * pf = treacle; </span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> * pf = &amp;treacle[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="总之，使用new和delete时，应遵守以下规则。"><a href="#总之，使用new和delete时，应遵守以下规则。" class="headerlink" title="总之，使用new和delete时，应遵守以下规则。"></a>总之，使用new和delete时，应遵守以下规则。</h3><ul>
-<li><p>不要使用delete来释放不是new分配的内存。 </p>
-</li>
-<li><p>不要使用delete释放同一个内存块两次。 </p>
-</li>
-<li><p>如果使用new [ ]为数组分配内存，则应使用delete [ ]来释放。 </p>
-</li>
-<li><p>如果使用new [ ]为一个实体分配内存，则应使用delete（没有方括号）来释放。 </p>
-</li>
-<li><p>对空指针应用delete是安全的。</p>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="指针和字符串"><a href="#指针和字符串" class="headerlink" title="指针和字符串"></a>指针和字符串</h2><ol>
-<li><p>在cout和多数C++表达式中，char数组名、char指针以及用引号括起的字符串常量都被解释为字符串第一个字符的地址。cout对象认为char的地址是字符串的地址，因此它打印该地址处的字符，然后继续打印后面的字符，直到遇到空字符（\0） 为止。总之，如果给cout提供一个字符的地址，则它将从该字符开始打印，直到遇到空字符为止。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span> * bird = <span class="string">&quot;wren&quot;</span>;<span class="comment">//bird是字符串的地址</span></span><br><span class="line"><span class="type">char</span> animal [<span class="number">20</span>] = <span class="string">&quot;bear&quot;</span>;</span><br><span class="line"><span class="type">char</span> * ps;</span><br><span class="line">cout &lt;&lt; bird;<span class="comment">//会打印wren而不是地址; 用bird输入并不合适</span></span><br><span class="line">cin &gt;&gt; animal;<span class="comment">//输入的字符串要20个字符以内。这里不能cin &gt;&gt; ps,因为ps没有分配一个具体的地址</span></span><br><span class="line">ps = animal;<span class="comment">//将animal赋给ps并不会复制字符串，而只是复制地址,这两个指针将指向相同的内存单元和字符串。</span></span><br><span class="line">cout &lt;&lt; animal &lt;&lt;<span class="string">&quot; at &quot;</span> &lt;&lt; (<span class="type">int</span> *) animal &lt;&lt; endl;<span class="comment">//(int *)会打印animal的地址，而不是打印animal的值</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//接下来创建一个animal的副本：</span></span><br><span class="line">ps1 = <span class="keyword">new</span> <span class="type">char</span>[<span class="built_in">strlen</span>(animal)+<span class="number">1</span>];<span class="comment">//字符串“fox”不能填满整个animal数组，因此这样做浪费了空间。上述代码使用strlen( )来确定字符串的长度，并将它加1来获得包含空字符时该字符串的长度。随后，程序使用new来分配刚好足够存储该字符串的空间。</span></span><br><span class="line"><span class="built_in">strcpy</span>(ps1,animal);<span class="comment">//将animal赋给ps是不可行的，因为这样只能修改存储在ps中的地址，从而失去程序访问新分配内存的唯一途径。需要使用库函数strcpy( )将animal数组中的字符串复制到新分配的空间中;strcpy( )函数接受2个参数。第一个是目标地址，第二个是要复制的字符串的地址。</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="使用new创建动态结构"><a href="#使用new创建动态结构" class="headerlink" title="使用new创建动态结构"></a>使用new创建动态结构</h2><ol>
-<li><p>回顾一下结构，它能同时储存不同类型的值：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">inflatable</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> name[<span class="number">20</span>];</span><br><span class="line">	<span class="type">float</span> volume;</span><br><span class="line">	<span class="type">double</span> price;</span><br><span class="line">&#125;;<span class="comment">//C++不提倡使用外部变量，但提倡使用外部结构声明。另外，在外部声明符号常量通常更合理。</span></span><br><span class="line">inflatable vincent =</span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">&quot;Glorious Gloria&quot;</span>,</span><br><span class="line">	<span class="number">1.88</span>,</span><br><span class="line">	<span class="number">29.99</span></span><br><span class="line">&#125;;</span><br><span class="line">cout &lt;&lt; vincent.price;</span><br></pre></td></tr></table></figure></li>
-<li><p>在运行时创建数组优于在编译时创建数组，对于结构也是如此。通过使用new，可以创建动态结构。要创建结构，需要同时使用结构类型和new。例如，要创建一个未命名的inflatable类型，并将其地址赋给一个指针，可以这样做：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inflatable * ps = <span class="keyword">new</span> inflatable;<span class="comment">//这将把足以存储inflatable结构的一块可用内存的地址赋给ps。</span></span><br></pre></td></tr></table></figure></li>
-<li><p>创建动态结构时，不能将成员运算符句点用于结构名，因为这种结构没有名称，只是知道它的地址。C++专 门为这种情况提供了一个运算符：箭头成员运算符（−&gt;）。例如，如果ps指向一个inflatable结构，则ps−&gt;price是被指向的结构的price成员。</p>
-</li>
-<li><p>另一种访问结构成员的方法是，如果ps是指向结构的指针，则 * ps 就是被指向的值—结构本身。由于 * ps是一个结构，因此（*ps）.price是 该结构的price成员。C++的运算符优先规则要求使用括号。</p>
-</li>
-</ol>
-<h2 id="自动存储、静态存储和动态存储"><a href="#自动存储、静态存储和动态存储" class="headerlink" title="自动存储、静态存储和动态存储"></a>自动存储、静态存储和动态存储</h2><h3 id="自动储存"><a href="#自动储存" class="headerlink" title="自动储存"></a>自动储存</h3><p>在函数内部定义的常规变量使用自动存储空间，被称为自动变量 （automatic variable），这意味着它们在所属的函数被调用时自动产生，在该函数结束时消亡。</p>
-<p>实际上，自动变量是一个局部变量，其作用域为包含它的代码块。 代码块是被包含在花括号中的一段代码。如果在其中的某个代码块定义了一个变量，则该变量仅在程序执行该代码块中的代码时存在。</p>
-<h3 id="静态储存"><a href="#静态储存" class="headerlink" title="静态储存"></a>静态储存</h3><p>静态存储是整个程序执行期间都存在的存储方式。使变量成为静态的方式有两种：一种是在函数外面定义它；另一种是在声明变量时使用关键字static：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">double</span> fee = <span class="number">56.50</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="动态储存"><a href="#动态储存" class="headerlink" title="动态储存"></a>动态储存</h3><p>new和delete运算符提供了一种比自动变量和静态变量更灵活的方法。它们管理了一个内存池，这在C++中被称为自由存储空间（free store）或堆（heap）。new和delete让您能够在一个函数中分配内存，而在另一个函数中释放它。因此，数据的生命周期不完全受程序或函数的生存时间控制。</p>
-<p>如果使用new运算符在自由存储空间（或堆）上创建变量后，没有调用delete，将发生什么情况呢？实际上，将会无法访问自由存储空间中的结构，因为指向这些内存的指针无效。这将导致内存泄漏。要避免内存泄漏，最好是养成这样一种习惯，即同时使用new和delete运算符，在自由存储空间上动态分配内存，随后便释放它。</p>
-<h2 id="数组的替代品"><a href="#数组的替代品" class="headerlink" title="数组的替代品"></a>数组的替代品</h2><h3 id="模板类vector"><a href="#模板类vector" class="headerlink" title="模板类vector"></a>模板类vector</h3><p>vector类使用new和delete来管理内存，但这种工作是自动完成的。</p>
-<ul>
-<li><p><input disabled="" type="checkbox">  要使用vector对象，必须包含头文件vector。</p>
-</li>
-<li><p><input disabled="" type="checkbox">  vector包 含在名称空间std中，因此您可使用using编译指令、using声明或 std::vector。</p>
-</li>
-<li><p><input disabled="" type="checkbox">  模板使用不同的语法来指出它存储的数据类型。</p>
-</li>
-<li><p><input disabled="" type="checkbox">  vector类使用不同的语法来指定元素数。</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; vi;<span class="comment">//vi是一个vector&lt;int&gt;对象，由于vector对象在您插入或添加值时自动调整长度，因此可以将vi的初始长度设置为零（这里就是）。</span></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line">cin &gt;&gt; n;</span><br><span class="line"><span class="function">vector&lt;<span class="type">double</span>&gt; <span class="title">vd</span><span class="params">(n)</span></span>;<span class="comment">//此处的n可以使整型常量，也可以是整型变量</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="模板类array"><a href="#模板类array" class="headerlink" title="模板类array"></a>模板类array</h3><p>vector类的功能比数组强大，但付出的代价是效率稍低。如果您需要的是长度固定的数组，使用数组是更佳的选择，但代价是不那么方便和安全。有鉴于此，C++11新增了模板类array，它也位于名称空间std中。与数组一样，array对象的长度也是固定的，也使用栈（静态内存分 配），而不是自由存储区，因此其效率与数组相同，但更方便，更安全。要创建array对象，需要包含头文件array。array对象的创建语法与 vector稍有不同：</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;array&gt;</span></span><br><span class="line"><span class="attribute">using</span> namespace std;</span><br><span class="line"><span class="attribute">array</span>&lt;int,<span class="number">5</span>&gt; ai;//创建了一个有<span class="number">5</span>个int值的array类。这里的<span class="number">5</span>不能换为变量</span><br><span class="line"><span class="attribute">array</span>&lt;double,<span class="number">4</span>&gt; ad=&#123;<span class="number">1</span>.<span class="number">2</span>,<span class="number">1</span>.<span class="number">3</span>,<span class="number">2</span>.<span class="number">1</span>,<span class="number">2</span>.<span class="number">5</span>&#125;;</span><br></pre></td></tr></table></figure>
-
+        <p>登录：sudo mysql -r -p</p>
+<p>展示数据库：show databases;</p>
+<p>创建数据库：create database xxx;</p>
+<p>使用数据库：use xxx;</p>
+<p>创建表格：create table yyy(</p>
+<p>id int,</p>
+<p>name varchar(255),</p>
+<p>region varchar(255)</p>
+<p>);</p>
+<p>展示表格：show tables;</p>
+<p>描述表格：describe yyy;</p>
+<p>向表格写入数据：insert into yyy values (1, “xyz”, “xyz”);</p>
+<p>查看表格具体内容：select * from yyy;</p>
+<p>​    加入判断性语句：select * from yyy where name=”xyz”;</p>
+<p>​    升序：select * from yyy order by id asc;</p>
+<p>​    降序：select * from yyy order by id desc;</p>
 
       
     </div>
@@ -554,12 +449,6 @@
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/C-%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># C++小程序</a>
-          
-        </div>
       
 
       
@@ -585,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2022/06/11/%E9%9B%86%E4%BD%93%E5%A4%B1%E5%BF%86/" rel="next" title="集体失忆">
-                <i class="fa fa-chevron-left"></i> 集体失忆
+              <a href="/2022/10/26/%E6%88%91%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B9%B2%E4%BA%86%E4%BA%9B%E4%BB%80%E4%B9%88/" rel="next" title="我用服务器干了些什么">
+                <i class="fa fa-chevron-left"></i> 我用服务器干了些什么
               </a>
             
           </div>
@@ -595,8 +484,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2022/06/24/vim%E7%BC%96%E8%BE%91%E5%99%A8/" rel="prev" title="Linux编辑器">
-                Linux编辑器 <i class="fa fa-chevron-right"></i>
+              <a href="/2023/01/07/machine-learning/" rel="prev" title="machine_learning">
+                machine_learning <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -651,20 +540,11 @@
     
     
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
     
 
 
 
-    <section class="site-overview sidebar-panel">
+    <section class="site-overview sidebar-panel sidebar-panel-active">
       <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
         <img class="site-author-image" itemprop="image"
              src="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/透明底logo.png"
@@ -775,22 +655,6 @@ show_date_time();
 
     </section>
     
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%8C%87%E9%92%88"><span class="nav-number">1.</span> <span class="nav-text">声明和初始化指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8new%E6%9D%A5%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">使用new来分配内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8delete%E6%9D%A5%E9%87%8A%E6%94%BE%E5%86%85%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">使用delete来释放内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8new%E6%9D%A5%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">使用new来创建动态数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E4%B9%8B%EF%BC%8C%E4%BD%BF%E7%94%A8new%E5%92%8Cdelete%E6%97%B6%EF%BC%8C%E5%BA%94%E9%81%B5%E5%AE%88%E4%BB%A5%E4%B8%8B%E8%A7%84%E5%88%99%E3%80%82"><span class="nav-number">4.1.</span> <span class="nav-text">总之，使用new和delete时，应遵守以下规则。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">5.</span> <span class="nav-text">指针和字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8new%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E7%BB%93%E6%9E%84"><span class="nav-number">7.</span> <span class="nav-text">使用new创建动态结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%AD%98%E5%82%A8%E3%80%81%E9%9D%99%E6%80%81%E5%AD%98%E5%82%A8%E5%92%8C%E5%8A%A8%E6%80%81%E5%AD%98%E5%82%A8"><span class="nav-number">8.</span> <span class="nav-text">自动存储、静态存储和动态存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%82%A8%E5%AD%98"><span class="nav-number">8.1.</span> <span class="nav-text">自动储存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%82%A8%E5%AD%98"><span class="nav-number">8.2.</span> <span class="nav-text">静态储存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%82%A8%E5%AD%98"><span class="nav-number">8.3.</span> <span class="nav-text">动态储存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E6%9B%BF%E4%BB%A3%E5%93%81"><span class="nav-number">9.</span> <span class="nav-text">数组的替代品</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BBvector"><span class="nav-number">9.1.</span> <span class="nav-text">模板类vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%B1%BBarray"><span class="nav-number">9.2.</span> <span class="nav-text">模板类array</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
     
 
