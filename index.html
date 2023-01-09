@@ -450,8 +450,24 @@ classification problems:
 
 
 ​    unsupervised learning
-figure out what’s interesting or what patterns or structures there m
-          ...
+figure out what’s interesting or what patterns or structures there might be in the data
+
+
+(Google pick out the words all by itself)
+
+the idea is to measure how much certain genes are expressed for each individual person
+
+data only comes with inputs x, but not output labels y. Algorithm has to find structure in the data
+
+clustering: group similar data points together
+anomaly detection: find unusual data points
+dimensionality reduction: compress data using fewer numbers
+
+
+
+linear regression 
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2023/01/07/machine-learning/#more" rel="contents">
@@ -803,8 +819,12 @@ region varchar(255)
           距离上次更新博客已经几个月过去了。暑假的时候一直想等折腾完了服务器再一起写博客，但是开学后发现hexo始终提交不上去，这件事就一直搁置到现在。昨天突然通知封控三天，今天才有时间把这个问题修复了。
 这个暑假我首次接触到了服务器运维这个全新的领域，并且学习了了Linux的使用。最初想要研究服务器是因为对国内通讯软件的不满：在微信上说话都得使用暗号，敏感的事情提都不能提，完全没有言论自由。我有了解过微信运行是要服务器的，就想着把通讯软件构建到自己的服务器上。
 于是我就去腾讯云购买了一年的云服务器，花费68元，非常便宜。然后又去github上找了通讯软件试图部署在腾讯云上。由于之前没有接触过Linux，使用过程中遇到了很多问题。那段时间最常干的事情就是重装系统。最后从互联网中零碎的信息大致了解了Linux使用方法，成功在服务器上部署了open-im通讯软件。犹记得那时还在大连旅游，部署好后就去海边游泳了。那天阳光灿烂，又从零开始成功部署了服务器应用，所以心情十分愉悦。
-不过这是个技术帖，talk is cheap.部署的方式是docker，开发者提供了各个平台的应用程序，需要在里面输入ip地址
-          ...
+不过这是个技术帖，talk is cheap.部署的方式是docker，开发者提供了各个平台的应用程序，需要在里面输入ip地址和端口号才能使用我的服务器。
+之后还部署了wordpress，是使用宝塔一键部署的。不过我对wordpress做博客的可靠性存疑，因为直接在编辑器里写东西上传，在本地是没有备份的，而用hexo就能避免数据丢失。不过我主要的目的是用服务器构建实例，所以也没用wordpress写什么。
+一开始我使用了wordpress中的bbs插件做了个论坛，不过后来成功部署了discuz!论坛平台，就放弃wordpress了，不过也没什么人在上面讨论（悲）。
+（未完）
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/10/26/%E6%88%91%E7%94%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B9%B2%E4%BA%86%E4%BA%9B%E4%BB%80%E4%B9%88/#more" rel="contents">
@@ -1172,8 +1192,20 @@ Qt坐标系左上角为原点，右边x轴正方向，下面y轴正方向
 自定义信号和槽自定义信号
 写到signals下
 返回void
-需要声明，不需要实
-          ...
+需要声明，不需要实现
+可以有参数，可以重载
+
+自定义槽函数
+建议写到public slot下
+返回void
+需要声明，也需要实现
+可以有参数，可以重载
+
+触发自定义的信号
+emit 自定义信号
+
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/07/04/%E7%AC%AC%E4%B8%80%E4%B8%AAQt%E7%A8%8B%E5%BA%8F/#more" rel="contents">
@@ -1366,7 +1398,47 @@ Qt坐标系左上角为原点，右边x轴正方向，下面y轴正方向
 
 通常，C++程序员将接口（类定义）放在头文件中，并将实现（类方法的代码）放在源代码文件中。
 为帮助识别类，有一个常见但不通用的约定——将类名首字母大写。
-访问控制123456789101112131415161718192021222324// stock00.h -- Stock class interface// version 00#ifndef STOCK00_H_#define STOCK00_H_#include &lt;string&gt;  class Stock  // 关键字class指出这些代码定义了一个类设计（不同于模板参数，这里不能用typename代替class）。这里stock就是对象（或者叫实例），每个对象都表示一支股票。&#123;private: // 由于隐藏数据是OOP主要的目标之一，因此数据项通常放在私有部分，组成类接口的成员函数放在公有部分；否则，就无法从程序中调用这些函数。不必在类声明中使用关键字private，因为这是类对象的默认访问控制，但为了强调数据隐藏的概念，这里显示地使用了
+访问控制123456789101112131415161718192021222324// stock00.h -- Stock class interface// version 00#ifndef STOCK00_H_#define STOCK00_H_#include &lt;string&gt;  class Stock  // 关键字class指出这些代码定义了一个类设计（不同于模板参数，这里不能用typename代替class）。这里stock就是对象（或者叫实例），每个对象都表示一支股票。&#123;private: // 由于隐藏数据是OOP主要的目标之一，因此数据项通常放在私有部分，组成类接口的成员函数放在公有部分；否则，就无法从程序中调用这些函数。不必在类声明中使用关键字private，因为这是类对象的默认访问控制，但为了强调数据隐藏的概念，这里显示地使用了private。    std::string company;    long shares;    double share_val;    double total_val;    void set_tot() &#123; total_val = shares * share_val; &#125;public: // 使用类对象的程序都可以直接访问公有部分，但只能通过公有成员函数来访问对象的私有成员。例如要修改这里的shares成员，只能通过Stock的成员函数。公有成员函数是程序和对象的私有成员的桥梁，提供了对象和程序之间的接口。这种防止程序直接访问数据的情况被称为数据隐藏。    void acquire(const std::string &amp; co, long n, double pr);    void buy(long num, double price);    void sell(long num, double price);    void update(double price);    void show();&#125;;    // note semicolon at the end#endif
+
+如果要创建两个stock对象，可以这样做：
+12Stock sally；Stock solly；
+
+
+数据隐藏不仅可以直接放置直接访问数据，还能让使用类的用户无需了解数据是如何被表示的
+
+实现类成员函数上面在public中定义了许多函数，现在我们要为这些函数提供具体的代码。成员函数定义与常规函数定义非常相似，但有两个特殊的地方：
+
+使用作用域解析运算符(::)来标识函数所属的类
+类方法可以访问类的private组件，如果试图使用非成员函数访问这些数据成员，编译器禁止这样做（友元函数除外）
+
+1void Stock::update(double price) // 定义的update()函数是Stock类的成员。我们说，Stock::update( )是函数的限定名（qualified name）；而简单的update( )是全名的缩写（非限定名，unqualified name），它只能在类作用域中使用。
+
+了解这两点后，就可以实现类方法了：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869// stock00.cpp -- implementing the Stock class// version 00#include &lt;iostream&gt;#include &quot;stock00.h&quot;void Stock::acquire(const std::string &amp; co, long n, double pr)&#123;    company = co;    if (n &lt; 0)    &#123;        std::cout &lt;&lt; &quot;Number of shares can&#x27;t be negative; &quot;                  &lt;&lt; company &lt;&lt; &quot; shares set to 0.\n&quot;;        shares = 0;    &#125;    else        shares = n;    share_val = pr;    set_tot();&#125; // 管理对某个公司股票的首次购买void Stock::buy(long num, double price)&#123;     if (num &lt; 0)    &#123;        std::cout &lt;&lt; &quot;Number of shares purchased can&#x27;t be negative. &quot;             &lt;&lt; &quot;Transaction is aborted.\n&quot;;    &#125;    else    &#123;        shares += num;        share_val = price;        set_tot();    &#125;&#125; // 管理买入股票void Stock::sell(long num, double price)&#123;    using std::cout;    if (num &lt; 0)    &#123;        cout &lt;&lt; &quot;Number of shares sold can&#x27;t be negative. &quot;             &lt;&lt; &quot;Transaction is aborted.\n&quot;;    &#125;    else if (num &gt; shares)    &#123;        cout &lt;&lt; &quot;You can&#x27;t sell more than you have! &quot;             &lt;&lt; &quot;Transaction is aborted.\n&quot;;    &#125;    else    &#123;        shares -= num;        share_val = price;        set_tot();    &#125;&#125; // 管理卖出股票void Stock::update(double price)&#123;    share_val = price;    set_tot();&#125;void Stock::show()&#123;    std::cout &lt;&lt; &quot;Company: &quot; &lt;&lt; company              &lt;&lt; &quot;  Shares: &quot; &lt;&lt; shares &lt;&lt; &#x27;\n&#x27;              &lt;&lt; &quot;  Share Price: $&quot; &lt;&lt; share_val              &lt;&lt; &quot;  Total Worth: $&quot; &lt;&lt; total_val &lt;&lt; &#x27;\n&#x27;;&#125;
+
+4个成员函数设置或重新设置了total_val成员值。这个类并非将计算 代码编写4次，而是让每个函数都调用set_tot( )函数。这里的set_tot()函数只是实现代码的一种方式，而不是公共接口。因此只有在编写类的时候能使用这个函数，在编写程序时不能使用这个函数。
+这种方法的主要价值在于，通过使用函数调用，而不是每次重新输入计算代码，可以确保执行的计算完全相同。另外，如果必须修订计算代码（在这个例子中，这种可能性不大），则只需在一个地方进行修改即可。
+定义位于类声明中的函数都将自动成为内联函数，因此Stock::set_tot( )是一个内联函数。类声明常将短小的成员函数作为内联函数，set_tot( )符合这样的要求。
+方法使用哪个对象在上面的代码中，有这样一条语句：shares += num；那么这条语句是对哪个对象操作的呢？
+先看一下如何创建对象，最简单的方式是声明类变量：
+1Stock kate, joe; // 创建了两个对象
+
+如果要使用对象的成员函数，可以像使用结构一样通过成员运算符：
+12kate.show();joe.show();
+
+第1条语句调用kate对象的show( )成员。这意味着show( )方法将把shares解释为kate.shares，将share_vla解释为kate.share_val。同样，函数调用joe.show( )使show( )方法将shares和share_val分别解释为joe.share和 joe.share_val。
+
+
+使用类C++的目标是使得使用类与使用基本的内置类型（如int和char）尽可能相同。
+123456789101112131415161718192021// usestok0.cpp -- the client program// compile with stock.cpp#include &lt;iostream&gt;#include &quot;stock00.h&quot;int main()&#123;    Stock fluffy_the_cat;    fluffy_the_cat.acquire(&quot;NanoSmart&quot;, 20, 12.50);    fluffy_the_cat.show();    fluffy_the_cat.buy(15, 18.125);    fluffy_the_cat.show();    fluffy_the_cat.sell(400, 20.00);    fluffy_the_cat.show();    fluffy_the_cat.buy(300000,40.125);    fluffy_the_cat.show();    fluffy_the_cat.sell(300000,0.125);    fluffy_the_cat.show();    // std::cin.get();    return 0;&#125; // 要编译该程序，可使用用于多文件程序的方法，将其与stock00.cpp一起编译，并确保stock00.h位于当前文件夹中。
+
+在前面的程序输出中，可能有一个方面让您恼火——数字的格式不一致。现在可以改进实现，但保持接口不变。ostream类包含一些可用于控制格式的成员函数。这里不做太详细的探索，只需使用方法setf()，便可避免科学计数法：
+1std::cout.setf(std::ios_base::fixed, std::ios_base::floatfield); // 设置了cout对象的一个标记，命令cout使用定点表示法。
+
+同样， 下面的语句导致cout在使用定点表示法时，显示三位小数：
+1std::cout.precision(3);
+
+可在方法show(
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1556,7 +1628,48 @@ Qt坐标系左上角为原点，右边x轴正方向，下面y轴正方向
         
           
           单独编译先从之前的代码讲起：
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include &lt;iostream&gt;#include &lt;cmath&gt;struct polar // 极坐标结构&#123;    double distance;    double angle;&#125;struct rect // 平面直角坐标系结构&#123;    double x;    double y;&#125;polar rect_to_polar(rect xypos);void show_polat(polar dapos);int main()&#123;    using namespace std;    rect rplace;    polar pplace;        cout &lt;&lt; &quot;Enter the x and y values: &quot;;    while (cin &
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include &lt;iostream&gt;#include &lt;cmath&gt;struct polar // 极坐标结构&#123;    double distance;    double angle;&#125;struct rect // 平面直角坐标系结构&#123;    double x;    double y;&#125;polar rect_to_polar(rect xypos);void show_polat(polar dapos);int main()&#123;    using namespace std;    rect rplace;    polar pplace;        cout &lt;&lt; &quot;Enter the x and y values: &quot;;    while (cin &gt;&gt; rplace.x &gt;&gt; rplace.y) //cin被用于测试表达式中时，将根据输入是否成功，被转换为bool值true或false    &#123;        pplace = rect_to_polar(rplace);        show_polar(pplace);        cout &lt;&lt; &quot;Next two numbers (q to quit): &quot;;    &#125;    cout &lt;&lt; &quot;Done.\n&quot;;    return 0;&#125;polar rect_to_polar(rect xypos)&#123;    using namespace std;    polar answer;    answer.distance =        sqrt( xypos.x*xypos + xypos.y*xypos.y);    answer.angle = atan2(xypos.y,sypos.x);    return answer;&#125;void show_polar(polar dapos)&#123;    using namespace std;    const double Rad_to_deg = 57.29577951; //C++默认处理角度为弧度制    cout &lt;&lt;&quot;distance = &quot; &lt;&lt; dapos.distance;    cout &lt;&lt;&quot;, angle = &quot; &lt;&lt; dapos.angle * Rad_to_deg;    cout &lt;&lt;&quot; degrees\n&quot;;&#125;
+
+C++允许甚至鼓励程序员将组建函数刚在独立的文件中。在本例中，可以将rect_to_polar和show_polar写成单独的文件。
+但问题是，这两个函数都用了polar和rect结构。可以将这两个结构复制到两个函数的文件中，但如果要修改的话就要修改两次，非常麻烦。我们可以使用#include来处理这种情况，将结构声明放在头文件中，然后再每一个源代码文件中包含该头文件，这样，要修改结构声明时，只需在头文件中做一次改动即可。
+因此，可以将原来的程序分成三部分。 
+
+头文件：包含结构声明和使用这些结构的函数的原型。
+源代码文件：包含与结构有关的函数的代码。
+源代码文件：包含调用与结构相关的函数的代码。
+
+请不要将函数定义或变量声明放到头文件中。这样做对于简单的情况可能是可行的，但通常会引来麻烦。例如，如果在头文件包含一个函数定义，然后在其他两个文件（属于同一个程序）中包含该头文件，则同一个程序中将包含同一个函数的两个定义，除非函数是内联的，否则这将出错。下面列出了头文件中常包含的内容：
+
+函数原型。 
+使用#define或const定义的符号常量。 
+结构声明。 
+类声明。 
+模板声明。 
+内联函数
+
+注意，在包含头文件时，我们使 用“coordin.h”，而不是&lt;coodin.h&gt;。如果使用尖括号，则C++编译器会在存储标准头文件的主机系统的文件系统中查找。因此在包含自己的头文件时，应使用引号而不是尖括号。
+对于这个代码，我们可以将其拆分成三个程序。首先是头文件：
+12345678910111213141516171819202122// coordin.h -- structure templates and function prototypes// structure templates#ifndef COORDIN_H_/* 在同一个文件中只能将同一个头文件包含一次。为了避免在不知情的情况下降头文件包含多次，可以使用#ifndef指令(if not defined)。下面的代码片段意味着仅当以前没有使用预处理器编译指令#define定义名称COORDINH时，才处理#ifndef和#endif之间的语句 */#define COORDIN_H_struct polar&#123;    double distance;    // distance from origin    double angle;        // direction from origin&#125;;struct rect&#123;    double x;        // horizontal distance from origin    double y;        // vertical distance from origin&#125;;// prototypespolar rect_to_polar(rect xypos);void show_polar(polar dapos); #endif
+
+然后是main函数：
+1234567891011121314151617181920212223242526// file1.cpp -- example of a three-file program#include &lt;iostream&gt;#include &quot;coordin.h&quot; // structure templates, function prototypesusing namespace std;int main()&#123;    rect rplace;    polar pplace;    cout &lt;&lt; &quot;Enter the x and y values: &quot;;    while (cin &gt;&gt; rplace.x &gt;&gt; rplace.y)  // slick use of cin    &#123;        pplace = rect_to_polar(rplace);        show_polar(pplace);        cout &lt;&lt; &quot;Next two numbers (q to quit): &quot;;    &#125;    cout &lt;&lt; &quot;Bye!\n&quot;;// keep window open in MSVC++/*    cin.clear();    while (cin.get() != &#x27;\n&#x27;)        continue;    cin.get();*/    return 0; &#125;
+
+其他函数：
+123456789101112131415161718192021222324252627// file2.cpp -- contains functions called in file1.cpp#include &lt;iostream&gt;#include &lt;cmath&gt;#include &quot;coordin.h&quot; // structure templates, function prototypes// convert rectangular to polar coordinatespolar rect_to_polar(rect xypos)&#123;    using namespace std;    polar answer;    answer.distance =        sqrt( xypos.x * xypos.x + xypos.y * xypos.y);    answer.angle = atan2(xypos.y, xypos.x);    return answer;      // returns a polar structure&#125;// show polar coordinates, converting angle to degreesvoid show_polar (polar dapos)&#123;    using namespace std;    const double Rad_to_deg = 57.29577951;    cout &lt;&lt; &quot;distance = &quot; &lt;&lt; dapos.distance;    cout &lt;&lt; &quot;, angle = &quot; &lt;&lt; dapos.angle * Rad_to_deg;    cout &lt;&lt; &quot; degrees\n&quot;;&#125;
+
+
+
+存储持续性、作用域和链接性有关内存的知识C++11使用四种不同的方案来储存数据，这些方案的区别在于数据保存在内存中的时间。
+
+自动储存持续性：在函数定义中声明的变量，在执行函数或代码块时被创建，执行完后使用的内存被释放。
+
+静态储存持续性：在函数定义外定义的变量和使用关键字static定义的变量在程序整个运行过程中都存在。
+要想创建链接性为外部的静态持续变量，必须在代码块的外面声明它；要创建链接性为内部的静态持续变量，必须在代码块的外面声明它，并使用static限定符；要创建没有链接性的静态持续变量，必须在代码块内声明它，并使用static限定符。
+12345678910111213141516int global = 1000; // 整个程序都存在，作用域为整个文件，由于global的链接性为外部，因此可以在程序的其他文件中使用它static int one_file = 50; // 整个程序都存在，作用域为整个文件，由于one_file的链接性为内部，因此只能在包含上述代码的文件中使用它int main()&#123;...&#125;void function1(int n)&#123;    static int count = 0; // 整个程序都存在,与llama不同的是，即使在function1( )函数没有被执行时，count也留在内存中    int llama = 0;    ...&#125;void function2(int q)&#123;...&#125;
+
+
+所有的静态持续变量都有下述初始化特征：未被初始化的静态变量的所有位都被设置为0。
+12345#include &lt;cmath&gt;int x; // 零初始化int y = 5; // 常量表达式初始化long z = 13*13; // 常量表达式初始化const double pi = 4.0*atan(
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1755,8 +1868,41 @@ C++内联函数提供了另一种选择。内联函数的编译代码与其他�
  在函数定义前加上关键字inline。
 
 通常的做法是省略原型，将整个定义（即函数头和所有函数代码）放在本应提供原型的地方。
-1234567891011121314151617181920// inline.cpp -- using an inline function#include &lt;iostream&gt;// an
-          ...
+1234567891011121314151617181920// inline.cpp -- using an inline function#include &lt;iostream&gt;// an inline function definitioninline double square(double x) &#123; return x * x; &#125; // 整个函数定义都放在一行中，但并不一定非得这样做。int main()&#123;    using namespace std;    double a, b;    double c = 13.0;    a = square(5.0);    b = square(4.5 + 7.5);   // can pass expressions    cout &lt;&lt; &quot;a = &quot; &lt;&lt; a &lt;&lt; &quot;, b = &quot; &lt;&lt; b &lt;&lt; &quot;\n&quot;;    cout &lt;&lt; &quot;c = &quot; &lt;&lt; c;    cout &lt;&lt; &quot;, c squared = &quot; &lt;&lt; square(c++) &lt;&lt; &quot;\n&quot;;    cout &lt;&lt; &quot;Now c = &quot; &lt;&lt; c &lt;&lt; &quot;\n&quot;;    // cin.get();    return 0;  &#125;
+
+
+
+引用变量创建引用变量C和C++使用&amp;符号来指示变量的地址。C++给&amp;符号赋予了另一个含义，将其用来声明引用。例如，要将rodents作为rats变量的别名，可以这样做：
+12int rats;int &amp; rodents = rats; // &amp;不是地址运算符，而是类型标识符的一部分。就像声明中的char*指的是指向char的指针一样，int &amp;指的是指向int的引用。
+
+上述引用声明允许将rats和rodents互换——它们指向相同的值和内存单元，对于其中任意一个操作都会同时影响另一个。
+将引用用作函数参数
+现在我们通过一个常见的的计算机问题——交换两个变量的值，对使用引用和使用指针做一下比较。交换函数必须能够修改调用程序中的变量的值。这意味着按值传递变量将不管用，因为函数将交换原始变量副本的内容，而不是变量本身的内容。但传递引用时，函数将可以使用原始数据。另一种方法是，传递指针来访问原始数据。
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758// swaps.cpp -- swapping with references and with pointers#include &lt;iostream&gt;void swapr(int &amp; a, int &amp; b);   // a, b are aliases for intsvoid swapp(int * p, int * q);   // p, q are addresses of intsvoid swapv(int a, int b);       // a, b are new variablesint main()&#123;    using namespace std;    int wallet1 = 300;    int wallet2 = 350;    cout &lt;&lt; &quot;wallet1 = $&quot; &lt;&lt; wallet1;    cout &lt;&lt; &quot; wallet2 = $&quot; &lt;&lt; wallet2 &lt;&lt; endl;    cout &lt;&lt; &quot;Using references to swap contents:\n&quot;;    swapr(wallet1, wallet2);   // pass variables    cout &lt;&lt; &quot;wallet1 = $&quot; &lt;&lt; wallet1;    cout &lt;&lt; &quot; wallet2 = $&quot; &lt;&lt; wallet2 &lt;&lt; endl;    cout &lt;&lt; &quot;Using pointers to swap contents again:\n&quot;;    swapp(&amp;wallet1, &amp;wallet2); // pass addresses of variables    cout &lt;&lt; &quot;wallet1 = $&quot; &lt;&lt; wallet1;    cout &lt;&lt; &quot; wallet2 = $&quot; &lt;&lt; wallet2 &lt;&lt; endl;    cout &lt;&lt; &quot;Trying to use passing by value:\n&quot;;    swapv(wallet1, wallet2);   // pass values of variables    cout &lt;&lt; &quot;wallet1 = $&quot; &lt;&lt; wallet1;    cout &lt;&lt; &quot; wallet2 = $&quot; &lt;&lt; wallet2 &lt;&lt; endl;    // cin.get();    return 0; &#125;void swapr(int &amp; a, int &amp; b)    // 引用，将a、b与wallet1、wallet2关联起来，这样a、b的更改会造成wallet的更改&#123;    int temp;    temp = a;       // use a, b for values of variables    a = b;    b = temp;&#125;void swapp(int * p, int * q)    // use pointers&#123;    int temp;    temp = *p;      // use *p, *q for values of variables    *p = *q;    *q = temp;&#125;void swapv(int a, int b)        // try using values&#123;    int temp;    temp = a;      // use a, b for values of variables    a = b;    b = temp; &#125; // 没有使用引用，也没有使用指针，只是按值传递，会无法交换
+
+将引用用于结构引用非常适合用于结构和类（C++的用户定义类型）。使用结构引用参数的方式与使用基本变量引用相同，只需在声明结构参数时使用引用运算符&amp;即可。
+1234567struct free_throws&#123;	xxx;	xxx;	xxx;&#125;void display(free_throws &amp; ft) // 在函数中将指向该结构的引用作为参数
+
+
+
+默认参数在使用函数时，可以将参数设为一个默认值，当不给定参数值的时候，参数值为默认值；当给定参数值时，会覆盖掉默认值。
+1char * left(const char * str, int n = 1) ; // 您希望该函数返回一个新的字符串，因此将其类型设置为char*（指向char的指针）；您希望原始字符串保持不变，因此对第一个参数使用了const限定符；您希望n的默认值为1，因此将这个值赋给n。
+
+对于带参数列表的函数，必须从右向左添加默认值。
+123int harpo(int n, int m = 4, int j = 5); // 合法int chico(int n, int m = 6, int j); // 非法int groucho(int k = 1, int m = 2, int n = 3); //合法
+
+
+
+函数重载可以用一个函数名对应多个函数，只需要在使用时匹配好格式：
+
+
+仅当函数基本上执行相同的任务，但使用不同形式的数据时，才应采用函数重载。
+函数模板之前定义了交换两个int值的函数。那如果要交换两个double值呢？用手工将int对应地替换为double是一种办法，但费时多，且容易出错；如果用全局替换又有可能吧其他地方的int替换为double。
+C++的函数模板功能能自动完成这一过程，可以节省时间，而且更可靠。函数模板允许以任意类型的方式来定义函数。例如，可以这样建立一个交换模板：
+12345678template &lt;typename AnyType&gt; // 这句话指出要建立一个模板，并将类型命名为AnyType。关键字template和typename是必需的，除非可以使用关键字class代替typename。void Swap(AnyType &amp;a, AnyType &amp;b)&#123;	AnyTpye temp;	temp = a;	a = b;	b = temp;&#125;
+
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/07/01/%E5%87%BD%E6%95%B0%E6%8E%A2%E5%B9%BD/#more" rel="contents">
@@ -1957,7 +2103,45 @@ C++内联函数提供了另一种选择。内联函数的编译代码与其他�
 12345void cheers(int n)&#123;	for (int i = 0; i &lt; n; i++)        std::cout &lt;&lt; &quot;Cheers!&quot; &lt;&lt; std::endl;&#125;
 
 有返回值的函数将生成一个值，并将它返回给调用函数。
-12345typename functionName(parameterList) //C++对于返回值的类型有一定的限制：不能是数组，但可以是其他任何类型——整数、浮点数、指针，甚至可以是结构和对象！&#123;	stateme
+12345typename functionName(parameterList) //C++对于返回值的类型有一定的限制：不能是数组，但可以是其他任何类型——整数、浮点数、指针，甚至可以是结构和对象！&#123;	statement(s);	return value;&#125;
+
+函数在执行返回语句后结束。如果函数包含多条返回语句（例如， 它们位于不同的if else选项中），则函数在执行遇到的第一条返回语句后结束。
+函数原型和函数调用函数原型是一条语句，因此必须以分号结束。获得原型最简单的方法是，复制函数定义中的函数头，并添加分号。
+1double cube(double x);
+
+然而，函数原型不要求提供变量名，有类型列表就足够了。对于 cheer( )的原型，该程序只提供了参数类型：
+1void cheers(int);
+
+
+
+函数和数组将数组元素累加是一项非常常见的任务，因此设计一个完成这项工作的函数很有意义。这样就不必在每次计算数组总和时都编写新的循环了。
+1234567891011121314...int sum = sum_arr(cookies, ArSize); //cookies是数组名，而根据C++规则，cookies是其第一个元素的地址，因此函数传递的是地址...    int sum_arr(int arr[], int n) //arr是指针，但在编写函数的其余部分时可以将arr看做是数组，n是数组的长度/* 也可以写作：int sum_arr(int * arr[], int n)因为在C++中，当（且仅当）用于函数头或函数原型中，int *arr和int arr[]的含义才是相同的。它们都意味着arr是一个int指针。*/&#123;    int total = 0;    for (int i = 0; i &lt; n; i++)        total = total + arr[i];    return total;&#125;
+
+C++将数组名解释为其第一个元素的地址。但这些情况下例外：
+
+数组声明使用数组名来标记存储位置
+对数组名使用sizeof将得到整个数组的长度（以字节为单位）
+将地址运算符&amp;用于数组名时，将返回整个数组的地址，例如&amp;cookies将返回一个32字节内存块的地址（int长4字节）
+
+就目前而言，请记住下面两个恒等式：
+12arr[i] == *(arr + i)&amp;arr[i] == arr + i
+
+例：
+12345678910111213141516171819202122232425262728293031323334353637// arrfun2.cpp -- functions with an array argument#include &lt;iostream&gt;const int ArSize = 8;int sum_arr(int arr[], int n);// use std:: instead of using directiveint main()&#123;    int cookies[ArSize] = &#123; 1,2,4,8,16,32,64,128 &#125;;    //  some systems require preceding int with static to    //  enable array initialization    std::cout &lt;&lt; cookies &lt;&lt; &quot; = array address, &quot;;    //  some systems require a type cast: unsigned (cookies)    std::cout &lt;&lt; sizeof cookies &lt;&lt; &quot; = sizeof cookies\n&quot;;    int sum = sum_arr(cookies, ArSize);    std::cout &lt;&lt; &quot;Total cookies eaten: &quot; &lt;&lt; sum &lt;&lt; std::endl;    sum = sum_arr(cookies, 3);        // “欺骗”计算机cookies只有3个元素    std::cout &lt;&lt; &quot;First three eaters ate &quot; &lt;&lt; sum &lt;&lt; &quot; cookies.\n&quot;;    sum = sum_arr(cookies + 4, 4);    // 由于cookies是第一个元素的地址，因此cookies + 4是第5个元素的地址。这条语句将计算数组第5、6、7、8个元素的总和。    std::cout &lt;&lt; &quot;Last four eaters ate &quot; &lt;&lt; sum &lt;&lt; &quot; cookies.\n&quot;;    // std::cin.get();    return 0;&#125;// return the sum of an integer arrayint sum_arr(int arr[], int n)&#123;    int total = 0;    std::cout &lt;&lt; arr &lt;&lt; &quot; = arr, &quot;;    // some systems require a type cast: unsigned (arr)    std::cout &lt;&lt; sizeof arr &lt;&lt; &quot; = sizeof arr\n&quot;;    for (int i = 0; i &lt; n; i++)        total = total + arr[i];    return total;&#125;
+
+运行结果如下：
+123456700000061420FF5F8 = array address, 32 = sizeof cookies00000061420FF5F8 = arr, 8 = sizeof arrTotal cookies eaten: 25500000061420FF5F8 = arr, 8 = sizeof arrFirst three eaters ate 7 cookies.00000061420FF608 = arr, 8 = sizeof arrLast four eaters ate 240 cookies.
+
+程序说明：
+cookies和arr都指向同一个地址，但是sizeof cookies为32，sizeof arr为8。这是由于sizeof cookies是整个数组的长度，而sizeof arr只是指针变量的长度。这也是必须显式传递数组长度，而不能在sum_arr( )中使用 sizeof arr的原因；指针本身并没有指出数组的长度。
+更多数组函数示例假设要使用一个数组来记录房地产的价值，将值读入到数组中和显示数组内容，并重新评估 每种房地产的值。
+填充数组1234567891011121314151617181920212223int fill_array(double ar[], int limit)&#123;    using namespace std;    double temp;    int i;    for (i = 0; i &lt; limit; i++) //如果用户输入的都是有效值，则循环将在读取最大数目的值后结束    &#123;        cout &lt;&lt; &quot;Enter value #&quot; &lt;&lt; (i + 1) &lt;&lt; &quot;: &quot;;        cin &gt;&gt; temp;        if (!cin)    // bad input        &#123;            cin.clear();            while (cin.get() != &#x27;\n&#x27;)                continue; //按下回车后结束输入           cout &lt;&lt; &quot;Bad input; input process terminated.\n&quot;;           break;         &#125;        else if (temp &lt; 0)                break; //可以使用负数来指出输入结束        ar[i] = temp;    &#125;    return i;&#125;
+
+显示数组及用const保护数组123456789void show_array(const double ar[], int n) //接受数组名的函数将使用原始数据，将数组ar变为常值数组，确保显示函数不修改原始数组&#123;    using namespace std;    for (int i = 0; i &lt; n; i++)    &#123;        cout &lt;&lt; &quot;Property #&quot; &lt;&lt; (i + 1) &lt;&lt; &quot;: $&quot;;        cout &lt;&lt; ar[i] &lt;&lt; endl;    &#125;&#125;
+
+修改数组12345void revalue(double r, double ar[], int n) //该函数只需要修改数组中元素的值，不需要返回值&#123;    for (int i = 0; i &lt; n; i++)        ar[i] *= r;&#125;
+
+组合起来：123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778// arrfun3.cpp -- array functions and const#include &lt;iostream&gt;const int Max = 5;// function prototypesint fill_array(double ar[], int limit);void show_array(const double ar[], int n);  // 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -2151,7 +2335,135 @@ C++内联函数提供了另一种选择。内联函数的编译代码与其他�
 if else1234if (test-condition)    statement1else    statement2
 
 例：
-12345678910111213141516171819#include &lt;iostream&gt;#include &lt;ctime&gt;int main()&#123;    using namespace std;    char ch;    cout &lt;&lt; &quot;Type, and i shall repeat.\n&quot;;    cin.get(ch);    while (ch != &#x27;.&#x27;)    &#123;        if (ch == &#x27;\n&#x27;)            cout &lt;&lt; ch;        else            cout &lt;&lt; ++ch;        cin.get(ch);    &#125;    return 0;&#1
+12345678910111213141516171819#include &lt;iostream&gt;#include &lt;ctime&gt;int main()&#123;    using namespace std;    char ch;    cout &lt;&lt; &quot;Type, and i shall repeat.\n&quot;;    cin.get(ch);    while (ch != &#x27;.&#x27;)    &#123;        if (ch == &#x27;\n&#x27;)            cout &lt;&lt; ch;        else            cout &lt;&lt; ++ch;        cin.get(ch);    &#125;    return 0;&#125;
+
+这里发现，++ch与ch++与ch+1带来的效果不同。这就要涉及到递增运算符（++）与递减运算符（–）的原理。两个版本对操作数的影响是一样的，但是影响的时间不同。这就像对于钱包来说， 清理草坪之前付钱和清理草坪之后付钱的最终结果是一样的，但支付钱 的时间不同。
+
+a++意味着使用a的当前值计算表达式，然后将a的值加 1；而++b的意思是先将b的值加1，然后使用新的值来计算表达式。
+利用递增运算符和递减运算符，可以改变ch的值，从而输出不同的字符。但是使用ch+1时，cout会认为要输出的是int值，因此输出的是一串数字。
+当使用ch++时，会使用ch当前的值计算表达式，再讲ch加1，所以输出的字符与原来的相同。
+当使用++ch时，会先讲ch的值加1，再利用加1后的ch计算表达式，因此会将所有的字符向后移动一位。
+与循环一样，如果if为true时执行的语句较复杂，请使用代码块：
+12345678if (test-condition)&#123;    statement&#125;else&#123;    statement&#125;
+
+if else if else结构123456if (test-condition)    statement1else if (test-condition)    statement2else    statement3
+
+逻辑表达式或：||
+||的优先级比关系运算符低，不需要括号
+C++规定，||运算符是个顺序点（sequence point）。也是说，先修改左侧的值，再对右侧的值进行判定（C++11的说法是，运算符左边的子 表达式先于右边的子表达式）。例如，请看下面的表达式：
+i++ &gt;10 || i==j
+假设i原来的值为10，则在对i和j进行比较时，i的值将为11。另外，如果左侧的表达式为true，则C++将不会去判定右侧的表达式，因为只 要一个表达式为true，则整个逻辑表达式为true（冒号和逗号运算符也是顺序点）。
+与：&amp;&amp;
+由于&amp;&amp;的优先级低于关系运算符，因此不必在这些表达式中使用括号。和||运算符一样，&amp;&amp;运算符也是顺序点，因此将首先判定左侧， 并且在右侧被判定之前产生所有的副作用。如果左侧为false，则整个逻辑表达式必定为false，在这种情况下，C++将不会再对右侧进行判定。
+非：！例：
+12345678910111213141516171819202122232425262728#include &lt;iostream&gt;#include &lt;climits&gt;bool is_int(double);int main()&#123;    using namespace std;    double num;    cout &lt;&lt; &quot;enter an interger value: &quot;;    cin &gt;&gt; num;    while (!is_int(num))    &#123;        cout &lt;&lt; &quot;Out of range -- please try again: &quot;;        cin &gt;&gt; num;    &#125;    int val = int(num);//将double转换为int，否则可能会显示1e+08这一类的数字    cout &lt;&lt; &quot;You&#x27;ve entered the interger &quot; &lt;&lt; val &lt;&lt; &quot;\nBye\n&quot;;    return 0;&#125;bool is_int(double x)&#123;    if (x &lt;= INT_MAX &amp;&amp; x &gt;= INT_MIN)        return true;    else        return false;&#125;
+
+如果给读取int值的程序输入一个过大的值，很多C++实现只是将这个值截短为合适的大小，并不会通知丢失了数据。这个程序避免了这样的问题。
+一些细节
+  可以用and，or，not代替&amp;&amp;，||，！
+
+  考虑优先级，逻辑表达式的优先级是最低的
+
+  知道第一个条件为false后，计算机可能不会判断下一个了（在or中）
+
+
+字符函数库cctypeC++从C语言继承了一个与字符相关的、非常方便的函数软件包， 它可以简化诸如确定字符是否为大写字母、数字、标点符号等工作，这些函数的原型是在头文件cctype（老式的风格中为ctype.h）中定义的。 例如，如果ch是一个字母，则isalpha（ch）函数返回一个非零值，否则 返回0。同样，如果ch是标点符号（如逗号或句号），函数 ispunct（ch）将返回true。（这些函数的返回类型为int，而不是bool， 但通常bool转换让您能够将它们视为bool类型。）
+
+
+
+函数名称
+返回值
+
+
+
+isalnum( )
+如果参数是字母数字，即字母或数字，该函数返回true
+
+
+isalpha( )
+如果参数是字母，该函数返回true
+
+
+iscntrl( )
+如果参数是控制字符，该函数返回true
+
+
+isdigit( )
+如果参数是数字（0～9），该函数返回true
+
+
+isgraph( )
+如果参数是除空格之外的打印字符，该函数返回true
+
+
+islower( )
+如果参数是小写字母，该函数返回true
+
+
+isprint( )
+如果参数是打印字符（包括空格），该函数返回true
+
+
+ispunct( )
+如果参数是标点符号，该函数返回true
+
+
+isspace( )
+如果参数是标准空白字符，如空格、进纸、换行符、回车、水平制表符或者垂直制表符，该函数返回true
+
+
+isupper( )
+如果参数是大写字母，该函数返回true
+
+
+isxdigit( )
+如果参数是十六进制数字，即0～9、a～f或A～F，该函数返回true
+
+
+tolower( )
+如果参数是大写字符，则返回其小写，否则返回该参数
+
+
+toupper( )
+如果参数是小写字符，则返回其大写，否则返回该参数
+
+
+？：运算符C++有一个常被用来代替if else语句的运算符，这个运算符被称为条件运算符（?:），它是C++中唯一一个需要3个操作数的运算符。该运算符的通用格式如下：
+1expression1 ? expression2 : expression3
+
+如果expression1为true，则整个条件表达式的值为expression2的值； 否则，整个表达式的值为expression3的值。
+
+switch语句C++的switch语句能够更容易地从大型列表中进行选 择。下面是switch语句的通用格式：
+1234567switch (整数值表达式) //如果integer-expression的值为4，则程序将执行case 4&#123;    case label1 : statement(s)    case label2 : statement(s)        ...    default 	: statement(s) //可选，如果整数值表达式不符合任何一个case则执行default，如果没有default则跳出Switch语句&#125;
+
+程序 跳到switch中特定代码行后，将依次执行之后的所有语句，除非有明确的其他指示。程序不会在执行到下一个case处自动停止，要让程序执行 完一组特定语句后停止，必须使用break语句。这将导致程序跳出switch语句。
+123456789switch (choice)&#123;    case 1 : statement(s)        break    case 2 : statement(s)        break        ...    default 	: statement(s)&#125; //简单的菜单
+
+如果删去break，输入2后，将执行case标签为 2、3、4和defualt中的所有语句
+将枚举量用作标签
+如果既可以使用if else if语句，也可以使用switch语句，则当选项不少于3个时，应使用switch 语句。
+break和continue语句continue语句用于循环中，让程序跳过循环体中余下的代码，并开始新一轮循环。
+
+虽然continue语句导致该程序跳过循环体的剩余部分，但不会跳过循环的更新表达式。在for循环中，continue语句使程序直接跳到更新表达式处，然后跳到测试表达式处。然而，对于while循环来说，continue将使程序直接跳到测试表达式处，因此while循环体中位于continue之后的更新表达式都将被跳过。
+goto语句和C语言一样，C++也有goto语句。下面的语句将跳到使用paris:作为标签的位置：
+1234567char ch;cin &gt;&gt; ch;if (ch==&#x27;P&#x27;)	goto paris;cout &lt;&lt; ......paris: cout &lt;&lt; &quot;you&#x27;ve just arrived at Paris.\n&quot;
+
+在大多数情况下（有些人认为，在任何情况下），使用goto语句不好，而应使用结构化控制语句（如if else、switch、continue等）来控制程序的流程。
+读取数字的循环假设要编写一个将一系列数字读入到数组中的程序，并允许用户在数组填满之前结束输入。一种方法是利用cin检测输入是不是数字。
+12int n;cin &gt;&gt; n;
+
+如果用户输入一个单词，而不是一个数字，情况将如何呢？发生这种类型不匹配的情况时，将发生4种情况： 
+
+n的值保持不变；
+不匹配的输入将被留在输入队列中；
+cin对象中的一个错误标记被设置；
+对cin方法的调用将返回false（如果被转换为bool类型）。
+
+这意味着可以有这样的程序：
+12345double fish[5];while (i&lt;5 &amp;&amp; cin &gt;&gt; fish[i])&#123;	...&#125;
+
+如果cin位于测试条件中，则将被转换为bool 型。如果输入成功，则转换后的值为true，否则为false。如果表达式的值为false，则循环结束。例如输入1,2,30等数字，程序将会运行；而输入quit时，程序将会退出。
+前面讲过，如果逻辑AND表达式的左侧为false，则C+
           ...
           <!--noindex-->
           <div class="post-button text-center">

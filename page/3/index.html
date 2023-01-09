@@ -440,8 +440,13 @@
         
           
           一个非常简单的小项目，不过是第一个用python爬虫写的代码，发出来纪念一下。
-12345678910111213141516171819202122232425262728293031323334# 拿到页面源代码# 通过re来提取有效信息import reimport csvimport requestsheaders=&#123;    &quot;user-agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36&quot;&#125;for a in range(-1,250,25):    url=&quot;https://movie.douban.com/top250?start=&#123;&#125;&amp;filter=&quot;.format(a)    resp=requests.get(url,headers=headers)    page_con
-          ...
+12345678910111213141516171819202122232425262728293031323334# 拿到页面源代码# 通过re来提取有效信息import reimport csvimport requestsheaders=&#123;    &quot;user-agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36&quot;&#125;for a in range(-1,250,25):    url=&quot;https://movie.douban.com/top250?start=&#123;&#125;&amp;filter=&quot;.format(a)    resp=requests.get(url,headers=headers)    page_content=resp.text    # 解析数据    obj=re.compile(r&#x27;&lt;li&gt;.*?&lt;div class=&quot;item&quot;&gt;.*?&lt;span class=&quot;title&quot;&gt;(?P&lt;name&gt;.*?)&lt;/span&gt;.*?&lt;p class=&quot;&quot;&gt;.*?&lt;br&gt;(?P&lt;year&gt;.*?)&amp;nbsp.*?&#x27;                   r&#x27;&lt;span class=&quot;rating_num&quot; property=&quot;v:average&quot;&gt;(?P&lt;score&gt;.*?)&lt;/span&gt;&#x27;,re.S)    # 开始匹配    result=obj.finditer(page_content)    f=open(&quot;data.csv&quot;,mode=&quot;a&quot;,encoding=&#x27;utf-8&#x27;,newline=&#x27;&#x27;)    csvwriter=csv.writer(f)    for it in result:        &quot;&quot;&quot;        print(it.group(&quot;name&quot;))        print(it.group(&quot;year&quot;).strip())        print(it.group(&quot;score&quot;).strip())        &quot;&quot;&quot;        dic=it.groupdict()        dic[&#x27;year&#x27;]=dic[&#x27;year&#x27;].strip()        csvwriter.writerow(dic.values())    f.close()    print(&#x27;over!&#x27;)
+
+其中涉及到正则表达式的应用。
+利用这个原理，我们可以构建稍微复杂一些的爬虫获取电影天堂的信息：
+1234567891011121314151617181920212223242526272829303132333435import reimport requestsdomain=&#x27;https://www.dytt89.com/&#x27;resp=requests.get(domain,verify=False) # verify=false：去掉安全验证resp.encoding=&#x27;gb2312&#x27; #指定字符集obj1=re.compile(r&quot;2022必看热片.*?&lt;ul&gt;(?P&lt;ul&gt;.*?)&lt;ul&gt;&quot;,re.S)obj2=re.compile(r&quot;&lt;a href=&#x27;(?P&lt;href&gt;.*?)&#x27;&quot;,re.S)obj3=re.compile(r&#x27;◎片　　名(?P&lt;movie&gt;.*?)&lt;br /&gt;.*?&#x27;                r&#x27;&lt;td style=&quot;WORD-WRAP: break-word&quot; bgcolor=&quot;#fdfddf&quot;&gt;&lt;a href=&quot;(?P&lt;download&gt;.*?)&quot;&gt;&#x27;,re.S)result1=obj1.finditer(resp.text)child_href_list=[]for it in result1:    ul=it.group(&#x27;ul&#x27;)    result2=obj2.finditer(ul)    for itt in result2:        child_href=domain+itt.group(&#x27;href&#x27;).strip(&#x27;/&#x27;) # 拼接子页面的url地址        child_href_list.append(child_href) # 吧子页面链接保存起来# 提取子页面内容for href in child_href_list:    child_resp=requests.get(href,verify=False)    child_resp.encoding=&#x27;gb2312&#x27;    # print(child_resp.text)    result3=obj3.search(child_resp.text)    print(result3.group(&#x27;movie&#x27;))    print(result3.group(&quot;download&quot;))    #break
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/25/python%E7%88%AC%E8%99%AB%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E9%A1%B9%E7%9B%AE/#more" rel="contents">
@@ -630,8 +635,20 @@
         
           
           在综合考虑后，使用了韩国的来必力进行了评论系统的搭建。该方法较为简单。首先在来必力官网注册账号，选择City版（免费），安装。（会生成 来必力City版安装代码以及 data-uid ，或者 进入管理页面-&gt;代码管理-&gt;一般网站，可以查看）使用一般网站的代码，如下：
-123456789101112131415161718&lt;!-- 来必力City版安装代码 --&gt;&lt;div id=&quot;lv-container&quot; data-id=&quot;city&quot; data-uid=&quot;这里是你自己的uid哦&quot;&gt;	&lt;script type=&quot;text/javascript&quot;&gt;   (function(d, s) &#123;       var j, e = d.getElementsByTagName(s)[0];       if (typeof LivereTower === &#x27;function&#x27;) &#123; return; &#125;       j = d
-          ...
+123456789101112131415161718&lt;!-- 来必力City版安装代码 --&gt;&lt;div id=&quot;lv-container&quot; data-id=&quot;city&quot; data-uid=&quot;这里是你自己的uid哦&quot;&gt;	&lt;script type=&quot;text/javascript&quot;&gt;   (function(d, s) &#123;       var j, e = d.getElementsByTagName(s)[0];       if (typeof LivereTower === &#x27;function&#x27;) &#123; return; &#125;       j = d.createElement(s);       j.src = &#x27;https://cdn-city.livere.com/js/embed.dist.js&#x27;;       j.async = true;       e.parentNode.insertBefore(j, e);   &#125;)(document, &#x27;script&#x27;);	&lt;/script&gt;&lt;noscript&gt; 为正常使用来必力评论功能请激活JavaScript&lt;/noscript&gt;&lt;/div&gt;&lt;!-- City版安装代码已完成 --&gt;
+
+然后改主题的_config.yml,增加如下：123# Livere评论系统Livere:livere_uid:  这里填  City版安装代码中的data-uid
+
+最后在主题目录下需要评论的地方加入来必力City版安装代码我需要在每篇文章结束的地方加入评论模块，所以需要在文章详情页面（post.ejs）里添加  来必力City版安装代码。
+ 在 C:\blog\themes\xxx\layout_partial中新建livere.ejs，并把来必力City版安装代码放在上面，然后在 post.ejs 中对应位置 partial(‘_partial/livere’) 引用即可
+在这里贴上我的post.ejs
+123456789101112131415&lt;div class=&quot;row&quot;&gt;    &lt;div class=&quot;col-sm-12&quot;&gt;        &lt;!--Title and Logo--&gt;        &lt;%- partial(&#x27;_partial/header.ejs&#x27;, &#123;logoIcon: page.logoIcon, headerTitle: &#x27;&#x27;&#125;) %&gt;        &lt;section class=&quot;main&quot;&gt;            &lt;%- partial(&#x27;_partial/article-long&#x27;, &#123;item: page&#125;) %&gt;            请先选择下方的社交媒体，登录之后才能够评论哦~            &lt;%- partial(&#x27;_partial/livere&#x27;) %&gt;        &lt;/section&gt;    &lt;/div&gt;&lt;/div&gt;
+
+
+本文引用了(4条消息) Hexo之安装Livere（来必力）评论插件（非Next主题）_Five-菜鸟级的博客-CSDN博客的部分内容
+
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/22/%E7%94%A8%E6%9D%A5%E5%BF%85%E5%8A%9B%E6%90%AD%E5%BB%BA%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/#more" rel="contents">
@@ -821,7 +838,21 @@
           
           这个栏目的灵感来源于@卢昌海，目的是鞭策自己多看，多想。这里贴出卢昌海的个人主页，受他的影响我开始写个人博客。卢昌海个人主页 (changhai.org)
 
-So can men and women be “just friends”? Both Meg Ryan and Billy Crystal were perhaps correct from their own sexes’ point of view. Women like to have male friends-they offer companionship, sharing, protection in times of need, information about the opposite sex, and even a boost to their self-esteem. Men too gain much from their female friends, including companionship, information, and sometimes even contacts with pote
+So can men and women be “just friends”? Both Meg Ryan and Billy Crystal were perhaps correct from their own sexes’ point of view. Women like to have male friends-they offer companionship, sharing, protection in times of need, information about the opposite sex, and even a boost to their self-esteem. Men too gain much from their female friends, including companionship, information, and sometimes even contacts with potential mates. But many men and only some women harbor sexual desires for their opposite-sex friends. Sometimes these desires are consummated-20 percent report having had sex with an opposite-sex friend. But “friends with privileges,” “friends with benefits,” or, as they sometimes say in New York, “kissing friends” are in the minority. Most women do not reciprocate their male friend’s sexual yearnings, despite the fact that men sometimes delude themselvesthat their female friends do. When misperceptions surface, as happened with my colleague, they can lead to an unpleasant end for men and women who start out as “just friends.” For others, opposite-sex friends sometimes tum into lifelong lovers, as eventually happened in the movie When Harry Met Sally.
+
+I’ve been searching for the answer to the question for a long time, and it turns out that “just friends” is really a hard thing for men and women. Let us take the example of friends, a classic soap opera. Among the six people, only Phoebe hadn’t develop a love relationship with other guys. Whether the director made it up or not, let’s face the fact that men and women should keep a distance unless being a couple. the author also made some research to support his idea:
+
+Men evaluated the potential for sexual access to their opposite-sex friends as 100 percent more beneficial than did women. Men were nearly twice as sexually attracted as women to their opposite-sex friends.
+Single or mated, unattached or committed-it doesn’t seem to matter to men when it comes to sexual desire for their female friends.
+An even more surprising finding occurred when Dr. Bleske asked participants how sexually attracted their opposite-sex friends were to them. Women slightly underestimated how attracted their friends were to them. Whereas men’s sexual attraction to their female friends came in at .5.3 on a 7-point scale, women’s perceptions of how attracted their male friends were to them came in at 4.7. Men’s perceptions of how attracted their opposite-sex friends were to them, however, proved to be more off base. Men viewed their female friends as moderately sexually attracted to them, averaging 4.7; but in fact, women expressed only a 3.6 level of attraction to their male friends. In other words, men erroneously see their female friends as moderately sexually attracted to them, despite the fact that, for many of these women, sex was not even on the radar screen. Finally, men were 62 percent more likely than women to cite “because of a lack of sex” as a reason for breaking up an opposite-sex friendship and 65 percent more likely to cite “because of a loss of attraction.” Bleske’s studies confirmed the experience of my female colleague-men are more likely to end a friendship when it becomes clear that sex is not part of the picture.
+
+I’m not saying that pure friend relationship does not exit in this universe between men and women, there are slight little chances. But in those probabilities, the unattractiveness of women does count a lot(not trying to offend anyone). So to the men who shares a “just friend” relationship with women, you should probably consider it through. After getting rid of the facts of unattractiveness of female and sexual need of male, a still close relationship is what we should admire.
+
+No one knows what the exact percentage of homosexuals is in any culture, past or present. Part of the difficulty lies with definitions. The sexologist Alfred Kinsey estimated that more than a third of all men engaged at some point in life in some form of homosexual activity, typically as part of adolescent experimentation. Far fewer people, however, express a strong preference for the same sex as a mate. Conservative estimates put the figure at about 3 to 4 percent for men and 1 percent for women.34 The discrepancy between the percentages of people who have engaged in some kinds of homosexual acts and people who express a core preference for partners of the same sex suggests an important distinction between the underlying psychology of preference and the outward manifestation of behavior. Many men who prefer women as mates may nonetheless substitute a man as a sex partner, either because of an inability to attract women or because of a temporary situational constraint that precludes access to women, such as being in prison.
+
+Maybe explains some of the social phenomenon among adolescent in China?
+
+Marriage provided one solution. 49 Men who married would benefit reproductively relative to ot
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1012,8 +1043,32 @@ So can men and women be “just friends”? Both Meg Ryan and Billy Crystal were
           
           ​    这个世界上大抵有三种学习好的人，一种是智商高的，一种是勤奋的，还有一种是既聪明又勤奋的。很不幸，我脑子既不聪明，平常也极其爱偷懒，就更别既聪明又勤奋了。每当看到别的同学刻苦背诵，我内心总是感到惭愧。久而久之，倒也发展出了偷懒的方法。因此这篇文章就来记录下我学语言的一些方法论。
 ​    可能是受王小波的熏陶，我学习从来都是跟着兴趣走的：什么东西有意思就去学，要是没有意思一眼也不愿意看。就好比数理化，学了后多多少少能解决些问题，体验思维的乐趣，因此我是非常愿意学的。对于这些感兴趣的科目，我都有超前的学习，学的最多的还是数学。还有一些无聊的科目，以政治最为代表。这件事从我上政治课的态度就能看出来：政治老师东扯西扯我是听的最为积极的，由于本人思想境界不高，到了习思想，这个政策那个政策就实在坚持不下去了。
-​    说了这么多离题的话，我的意图是说明兴趣对学习的重要性。我对文字本来就不敏感，就更需要些兴趣的加持了。所以上了高中，就搞了些英文原著来读。其中爱情作品最多，大概是为了弥补之前种种爱而不得的经历，体验一把恋爱的感觉。总而言之，有关爱情的作品确实能激起一个青春期男生的兴趣，而且
-          ...
+​    说了这么多离题的话，我的意图是说明兴趣对学习的重要性。我对文字本来就不敏感，就更需要些兴趣的加持了。所以上了高中，就搞了些英文原著来读。其中爱情作品最多，大概是为了弥补之前种种爱而不得的经历，体验一把恋爱的感觉。总而言之，有关爱情的作品确实能激起一个青春期男生的兴趣，而且又不会涉及太多专业名词（毕竟我也不是做研究），这样的书就是好书。
+​    一开始读像flipped这样的读物都会有些困难，要借助字典，加上反复咀嚼才能读懂。后面的每本书都是这样的，这并非是什么巧合，而是我照着蓝思值选的。所谓努力，应该是每次都有个适合的难度，拼命踮起脚尖，刚好能够够到。简而言之，就是要走出舒适区。就这么一直看下去，发现高考阅读确实不难。而我们要进行反思的是，为什么天朝从幼儿园就开始卷英文，每年投入如此多时间学习英语，到了大学依然很多人不能熟练阅读英文，更别提口语了。高中毕业，英语水平也就是母语者初一的水平。曾经看到一个说法，说“中国的英语教育水平，是让你刚好能够读文献，却又润不出去”，虽然带了些黑色幽默的成分，倒也比较真实。
+​    上面仅仅是一些实验，但实验是需要理论作为指导的。为了能够名正言顺，我还特地开发了一套理论。在谈到学英语之前，我们应该先去想一下以英语为口语的人是如何学习英语的。语言是上帝赋予人类的一个财富，正常人都能在儿童时期熟练掌握他们的母语。这种语言的学习是自然段，并且也是高效的。儿童不需要专门背单词，学习语法，就能掌握许多词汇。这是因为他们处在大量使用语言的场景内，久而久之将身边的事物贴上了语言的标签。因此，语言学习最重要的就是有一个语言环境。 
+​    但是我们日常生活中并不会使用英语，没有这种环境，怎么办呢？那就应该努力创造这种环境。身处在互联网时代，我们能够接触到大量外文资料（虽然有时候要翻墙，不过这是技术问题，这里不讨论）。我认为创造语言环境的核心，就是用大量的语句刺激大脑，从而让大脑习惯这种新的表述方式。最理想的状态就是每天能够抽两个小时出来，进行原著阅读，或者收听一些节目。将这种大量输入的理念运用到实际中，就是大量阅读原版书籍，大量收听英语频道，从而让自己用英语思维思考。
+​    不仅是英语，文言文学习也是如此。不过我的语文老师要我们又是抄原文又是翻译，搞得我头都大了，一想到文言文就生理性地抗拒。我和我的语文老师为此还发生过一些争执，这里附上通讯稿：
+
+  老师您好，近来学习英语有些感悟，想要和您交谈一下。  英语一直是让我头疼的一门学科。想到英语，浮现在我眼前的是背单词，学语法等一系列枯燥的学习方式。这种学习方法当然是有效的，但它真的是学习语言的最优解吗？我一直是个有创新精神的人，所以我就通过一系列的猜测，拿我自己做了个实验，探寻学习语言的方法。  在谈到学英语之前，我们应该先去想一下以英语为口语的人是如何学习英语的。语言是上帝赋予人类的一个财富，正常人都能在儿童时期熟练掌握他们的母语。这种语言的学习是自然段，并且也是高效的。儿童不需要专门背单词，学习语法，就能掌握许多词汇。这是因为他们处在大量使用语言的场景内，久而久之将身边的事物贴上了语言的标签。因此，语言学习最重要的就是有一个语言环境。  但是我们日常生活中并不会使用英语，没有这种环境，怎么办呢？那就应该努力创造这种环境。我认为创造语言环境的核心，就是用大量的语句刺激大脑，从而让大脑习惯这种新的表述方式。将这种大量输入的理念运用到实际中，就是大量阅读原版书籍，大量收听英语频道，从而让自己拥有一种英语思维。  于是乎，我就屯了一批英文原版书，并且每天看美剧。刚上高中时我阅读英文有些吃力，许多句子经常要看两遍，脑袋里翻译成中文，才能懂他的意思。在进行原版阅读后，我阅读的速度大幅提高，并且不用将英语翻译成中文便能体会它的意思，词汇量也增加了许多。就像武林高手，出招时不会念出招式，因为功夫早已内化成身体的一部分。  总结一下，熟练掌握一门语言要靠大量输入，而真正的掌握是拥有这门语言的思维。  那么学习文言文是否也可以采用这种方法呢？答案我也不知道，但是我有时间和胆量去放手一搏。现在抄文章再翻译的方法的确是有效的，但是一种方法对每个人的适用性是不一样的。对我来说，我是个不安分的人，喜欢尝试新思路，新方法，并且对单调的事物感到厌倦。另外，我本人记性也不太好，抄写完一遍留下的痕迹转瞬即逝。全文翻译对我来说也是痛苦的。坦白说，以我现在的文言水平，全文翻比较困难，所以免不了要搬运一下网络上的翻译。但是这样做，就容易落入形式主义中，最后的成果不一定好。正如我刚才所说，高效的运用语言是用文言文思考，而不是翻译成现代文再思考。至于考试中的翻译题，只要意会了就能翻出来，至少比我现在这种什么都看不懂的局面要好。  学习最主要的是兴趣。我每次想到大段抄写，心里都会对文言文产生抗拒心理，而这样是注定学不好文言文的。在学习英语时，我被原著的情节吸引，自然会有兴趣读下去。这种主动的学习，其效率绝对会比带着反感的被动学习高出不少。我觉得中国历史的精彩会像磁铁一般吸引我，让文言文学习变成主动学习。  因此，我认为学习文言文的正确方法是大量阅读文言文，并且有意识地运用它。上面说的都是理论，没有实践就都是废话。那么我在下面列出我的文言文学习规划：
+
+每天阅读古文观止、世说新语、史记一类的古文
+早上朗读古文，将文言文内化于心
+积累遇到的实词，根据遗忘规律复习
+对于学校百段将加点字释义背诵并理解全文，但不抄翻
+等到有一定的文言水平后试着运用文言表达，将被动词汇变为积极词汇
+
+  我是个喜欢独立思考，自己做决定的人。对于自己选择的路，虽然有可能失败，但也会硬着头皮走下去。我在初中时就跳出现有的框架，在别人拼命上辅导班时，退掉了补习班，选择了自学这条道路，实现了逆袭。事实证明，没有所谓正确的学习方法，只有适合自己的学习方法。我有信心在学习文言文上复刻以前的成功。况且离高三还有一年多的时间，错了再回头也来得及。文言文也不仅仅是高中的几道考题，它更是打开中国古代的一把钥匙。我对哲学有些兴趣，而中哲是对文言文水平有很高要求的。因此文言文学习是让一辈子都受益的事情，在脑力和体力最旺盛的这几年，学好文言文乃是当务之急。    据我平日的观察，您是一个包容学生思维差异性，对不同个体给予尊重的老师。世界的奇妙正是来源与各种差异。希望在这件事上您能够包容一下我这个差异，毕竟成功靠的不是循规蹈矩，而是敢为天下先的勇气和勤奋。
+
+对此，老师的回复如下：
+
+很高兴你能坦诚相待。文言文学习和英语学习有很多相同，但也有不同。英语学习的目的，至少现在来说主要是为了运用。但文言文不是，因为现在不需要你写文言文，而从高考的角度来说，需要你对文言文字字落实——这不是我对你的要求，是高考对所有学生的要求。跟你一样，即使作为来说，我也不喜欢抄写原文，所以有一阶段我没有像现在这样要求做文言文，但是，这样做的结果，是很多同学（特别是我们班的）都忽略了每周两三段的文言文阅读，只是抄一下有限的字词归类，甚至很多时候都懒得抄多一些，或者就是随便乱写。那么，这个作业做了又有何意义？不做又如何接触文言文？更不用说理解文言文、深入体会文言文内在的含义了！我很想少布置作业甚至不布置作业，这样你我都轻松。可作为老师，我在学校拿那份即使很微薄的薪水，也要对得起自己的工作；作为学生，来学校学习也至少要对得起花在学校的那么多时间和精力。后者不懂事（多数这样，毕竟学习越来越苦，而你们随着物质条件的提升，心理年龄随着时代的进步，在对待学校学习方面却越来越小），我只能用这种很笨拙的强迫的手段去要求你们做你们不喜欢的作业。但即使不是作业，只要是别人加诸于自己的任务，都或多或少会有反感吧？抄写文言文原文的确很花时间，或许我会考虑换一种方式让部分平时认真对待文言文作业的同学免除这部分“苦役”，但不可能免去全部。你说“抄写完一遍留下的痕迹转瞬即逝”，可能现在是，但未必都是这样，鸟儿飞过的痕迹，天空会知道，看见鸟儿飞过的会知道，鸟儿自己也知道！全文翻译即使很痛苦，也是必须的，因为这是高考的要求。我知道你是对自我学习有要求的人，不会随意对付学习，但很多人不是。而且处在一个群体中，如果每个人都希望按自己的想法来，我不可能做到，我没有这样的精力，希望你能体谅。这次的作业，你还是得补上，第一行的抄写，你可以打印，但第二第三行，必须按照我的要求。请今天完成。
+
+​    只能说各有各的难处。个人主义在中国一向是不受欢迎的，中国要的是集体主义，任何冒出头的都会被一棒子打回去。然而那些杰出的人大都是特立独行的，因此要么屈服，要么润了。
+​    后来学文言文也是一样的套路，读的第一本书是《笑林广记》。这本书改变了我对文言文严肃古板的印象，让我对它多少有了些兴趣。不过我这人做事一向三分热度，文言文阅读还是没坚持下来。等到学成那一天再来这做个记录吧。
+​    所以，我认为学习语言，就要以最自然的方式进行。自然的方式就是大量的读，多听，多说，而不是先对语法进行研究。这东西是语言学家研究的，我等凡夫俗子学不懂也情有可原（我认为上海高考把语法部分删减掉许多是明智之举）。这样，既能够偷懒，又能够学到些真本领。
+​    借着这个方法论的分享，我还想扯些别的。我们有时候非常努力，但是没什么提高，这可能不是智商问题，而是方法错了。这时候不妨停一下，出去走几步，换个方法再试试。
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/#more" rel="contents">
@@ -1201,8 +1256,10 @@ So can men and women be “just friends”? Both Meg Ryan and Billy Crystal were
       
         
           
-          利用C++以及随机函数实现一定数量选择题答案的生成。源代码如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include &lt;stdio.h&gt;#include &lt;iostream&gt;#include &lt;time.h&gt;using namespace std;#define MAX 4int main(int argc, char* argv[])&#123;    //srand()函数产生一个以当前时间开始的随机种子.    //应该放在for等循环语句前面不然要很长时间等待    srand((unsigned)time(NULL));    int number;    cout &lt;&lt; &quot;本程序利用随机函数作答选择题，请输入选择题的数量:&quot;;    cin &gt;&gt; number;    int answer;    for (int i 
-          ...
+          利用C++以及随机函数实现一定数量选择题答案的生成。源代码如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include &lt;stdio.h&gt;#include &lt;iostream&gt;#include &lt;time.h&gt;using namespace std;#define MAX 4int main(int argc, char* argv[])&#123;    //srand()函数产生一个以当前时间开始的随机种子.    //应该放在for等循环语句前面不然要很长时间等待    srand((unsigned)time(NULL));    int number;    cout &lt;&lt; &quot;本程序利用随机函数作答选择题，请输入选择题的数量:&quot;;    cin &gt;&gt; number;    int answer;    for (int i = 0; i &lt; number; i++)    &#123;        answer = rand() % MAX;        if (i &lt; 9)        &#123;            if (answer == 0)            &#123;                cout &lt;&lt;&quot;0&quot;&lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;A&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1            &#125;            else if (answer == 1)            &#123;                cout &lt;&lt; &quot;0&quot; &lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;B&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1            &#125;            else if (answer == 2)            &#123;                cout &lt;&lt; &quot;0&quot; &lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;C&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1            &#125;            else                cout &lt;&lt; &quot;0&quot; &lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;D&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1        &#125;        if (i &gt;= 9)        &#123;            if (answer == 0)            &#123;                cout &lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;A&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1            &#125;            else if (answer == 1)            &#123;                cout &lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;B&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1            &#125;            else if (answer == 2)            &#123;                cout &lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;C&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1            &#125;            else                cout &lt;&lt; i + 1 &lt;&lt; &quot;. &quot; &lt;&lt; &quot;D&quot; &lt;&lt; endl;//MAX为最大值，其随机域为0~MAX-1        &#125;    &#125;    return 0;&#125;
+
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/20/%E7%9E%8E%E8%92%99%E9%80%89%E6%8B%A9%E9%A2%98/#more" rel="contents">
@@ -1391,8 +1448,10 @@ So can men and women be “just friends”? Both Meg Ryan and Billy Crystal were
         
           
           本篇文章记录了hexo使用的代码，遗忘时可以参考
-12345678910111213141516171819202122232425常见命令：hexo new &quot;postName&quot;      # 新建文章hexo new page &quot;pageName&quot; # 新建页面hexo generate            # 生成静态页面至public目录hexo server              # 开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server）hexo deploy              # 部署到GitHubhexo help                # 查看帮助hexo version             # 查看Hexo的版本缩写命令：hexo n == hexo newhexo g == hexo generatehexo s == hexo serverhexo d == hexo deploy组合命令：hexo s -g   # 生成并本地预览hexo d -g   # 
-          ...
+12345678910111213141516171819202122232425常见命令：hexo new &quot;postName&quot;      # 新建文章hexo new page &quot;pageName&quot; # 新建页面hexo generate            # 生成静态页面至public目录hexo server              # 开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server）hexo deploy              # 部署到GitHubhexo help                # 查看帮助hexo version             # 查看Hexo的版本缩写命令：hexo n == hexo newhexo g == hexo generatehexo s == hexo serverhexo d == hexo deploy组合命令：hexo s -g   # 生成并本地预览hexo d -g   # 生成并上传通常做网页试运行时，我们会使用：hexo cleanhexo s -g当预览结束后，可以使用下面的代码进行发布：hexo cleanhexo d -g#以上代码在搭建博客的一级文件夹中右键，单击git bash here输入
+
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/20/%E6%9C%89%E5%85%B3hexo%E7%9A%84%E4%BD%BF%E7%94%A8/#more" rel="contents">
