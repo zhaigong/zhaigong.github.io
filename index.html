@@ -418,7 +418,39 @@
         
           
           machine learning algorithms:
-​    supervised learning (rapid advancements, used most in real-world applications): learns from being given “right answe
+​    supervised learning (rapid advancements, used most in real-world applications): learns from being given “right answers”
+
+
+
+input(X)
+output(Y)
+Application
+
+
+
+email
+spam
+spam filtering
+
+
+audio
+text translations
+speech recognition
+
+
+English
+Spanish
+machine translation
+
+
+learn from X and Y, then input new X, generate new Y 
+regression problems:
+classification problems:
+
+
+
+​    unsupervised learning
+figure out what’s interesting or what patterns or structures there m
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -592,8 +624,17 @@
 创建表格：create table yyy(
 id int,
 name varchar(255),
-region varchar(2
-          ...
+region varchar(255)
+);
+展示表格：show tables;
+描述表格：describe yyy;
+向表格写入数据：insert into yyy values (1, “xyz”, “xyz”);
+查看表格具体内容：select * from yyy;
+​    加入判断性语句：select * from yyy where name=”xyz”;
+​    升序：select * from yyy order by id asc;
+​    降序：select * from yyy order by id desc;
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/11/20/mysql/#more" rel="contents">
@@ -760,7 +801,9 @@ region varchar(2
         
           
           距离上次更新博客已经几个月过去了。暑假的时候一直想等折腾完了服务器再一起写博客，但是开学后发现hexo始终提交不上去，这件事就一直搁置到现在。昨天突然通知封控三天，今天才有时间把这个问题修复了。
-这个暑假我首次接触到了服务器运维这个全新的领域，并且学习了了Linux的使用。最初想要研究服务器是因为对
+这个暑假我首次接触到了服务器运维这个全新的领域，并且学习了了Linux的使用。最初想要研究服务器是因为对国内通讯软件的不满：在微信上说话都得使用暗号，敏感的事情提都不能提，完全没有言论自由。我有了解过微信运行是要服务器的，就想着把通讯软件构建到自己的服务器上。
+于是我就去腾讯云购买了一年的云服务器，花费68元，非常便宜。然后又去github上找了通讯软件试图部署在腾讯云上。由于之前没有接触过Linux，使用过程中遇到了很多问题。那段时间最常干的事情就是重装系统。最后从互联网中零碎的信息大致了解了Linux使用方法，成功在服务器上部署了open-im通讯软件。犹记得那时还在大连旅游，部署好后就去海边游泳了。那天阳光灿烂，又从零开始成功部署了服务器应用，所以心情十分愉悦。
+不过这是个技术帖，talk is cheap.部署的方式是docker，开发者提供了各个平台的应用程序，需要在里面输入ip地址
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -930,8 +973,11 @@ region varchar(2
           最近买了腾讯云的云服务器，搭建了ftp服务器。
 使用ftp服务器，可以获取到上传的文件，相当于早期的云盘。下面说明如何使用这种ftp服务：
 打开资源管理器，在地址栏中输入ftp://43.142.44.156:21，等待片刻后输入用户名：ftpuser，密码：Zhaigong2006
-如果报错，请进
-          ...
+如果报错，请进入控制面板，点击网络和Internet，Internet选项，高级，取消勾选 使用被动ftp
+如果还是不行，请按照ftp无法访问此文件夹怎么解决_ftp文件夹错误无法访问此文件夹如何处理-win7之家 (win7zhijia.cn)中的方案解决。
+这种方法可能较为复杂且延时高，但是操作一次之后就可以迅速访问，并且放在ftp文件中的文件是非常安全的。
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/07/28/ftp/#more" rel="contents">
@@ -1103,7 +1149,30 @@ region varchar(2
 设置父亲 setParent(this)
 设置文本 setText(“文字”)
 重新指定窗口大小 resize
-设置窗口标题 setWindowTi
+设置窗口标题 setWindowTitle
+设置固定窗口大小 setFixedSize(600,400)
+
+对象树
+当创建的对象在堆区的时候，如果指定的福清是QObject派生下来的类或者QObject子类派生下来的类，可以不用管理释放的操作，大胆使用new
+
+一定程度上简化了内存回收机制
+
+
+Qt坐标系左上角为原点，右边x轴正方向，下面y轴正方向
+信号和槽连接函数：connect
+
+参数1 信号的发送者
+参数2 发送的信号（函数地址）
+参数3 信号的接受者
+参数4 处理的槽函数（函数的地址）
+
+比如要实现关闭按钮：
+1connect(btn, &amp;QPushButton::click,this,&amp;QWidget::close);
+
+自定义信号和槽自定义信号
+写到signals下
+返回void
+需要声明，不需要实
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1297,7 +1366,7 @@ region varchar(2
 
 通常，C++程序员将接口（类定义）放在头文件中，并将实现（类方法的代码）放在源代码文件中。
 为帮助识别类，有一个常见但不通用的约定——将类名首字母大写。
-访问控制123456789101112131415161718192021222324/
+访问控制123456789101112131415161718192021222324// stock00.h -- Stock class interface// version 00#ifndef STOCK00_H_#define STOCK00_H_#include &lt;string&gt;  class Stock  // 关键字class指出这些代码定义了一个类设计（不同于模板参数，这里不能用typename代替class）。这里stock就是对象（或者叫实例），每个对象都表示一支股票。&#123;private: // 由于隐藏数据是OOP主要的目标之一，因此数据项通常放在私有部分，组成类接口的成员函数放在公有部分；否则，就无法从程序中调用这些函数。不必在类声明中使用关键字private，因为这是类对象的默认访问控制，但为了强调数据隐藏的概念，这里显示地使用了
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1487,7 +1556,7 @@ region varchar(2
         
           
           单独编译先从之前的代码讲起：
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include &lt;iostream&gt;#include &lt;cm
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152#include &lt;iostream&gt;#include &lt;cmath&gt;struct polar // 极坐标结构&#123;    double distance;    double angle;&#125;struct rect // 平面直角坐标系结构&#123;    double x;    double y;&#125;polar rect_to_polar(rect xypos);void show_polat(polar dapos);int main()&#123;    using namespace std;    rect rplace;    polar pplace;        cout &lt;&lt; &quot;Enter the x and y values: &quot;;    while (cin &
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1677,7 +1746,16 @@ region varchar(2
         
           
           C++内联函数先看看C++编译时对于普通函数是如何操作的。运行程序时，操作系统将这些指令载入到计算机内存中，因此每条指令都有特定的内存地址。在main()函数中，机器会逐行执行指令。在遇到函数后，机器会跳转到函数对应的内存地址，将函数执行完后再跳回main()函数。
-来回跳跃并记录跳跃位置意味着使用
+来回跳跃并记录跳跃位置意味着使用普通函数时，需要一定的开销。
+C++内联函数提供了另一种选择。内联函数的编译代码与其他程序代码“内联”起来了。也就是说，编译器将使用相应的函数代码替换函数调用。对于内联代码，程序无需跳到另一个位置处执行代码，再跳回来。因此，内联函数的运行速度比常规函数稍快，但代价是需要占用更多内存。
+
+要使用这项特性，必须采取下述措施之一： 
+
+在函数声明前加上关键字inline；
+ 在函数定义前加上关键字inline。
+
+通常的做法是省略原型，将整个定义（即函数头和所有函数代码）放在本应提供原型的地方。
+1234567891011121314151617181920// inline.cpp -- using an inline function#include &lt;iostream&gt;// an
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1873,7 +1951,13 @@ region varchar(2
  调用函数。
 
 可以将函数分成两类：没有返回值的函数和有返回值的函数。没有 返回值的函数被称为void函数，其通用格式如下：
-12345void functionName(parameterList) 
+12345void functionName(parameterList) //parameterList指定了传递给函数的参数类型和数量&#123;	statement(s);	return; //可选&#125;
+
+例：
+12345void cheers(int n)&#123;	for (int i = 0; i &lt; n; i++)        std::cout &lt;&lt; &quot;Cheers!&quot; &lt;&lt; std::endl;&#125;
+
+有返回值的函数将生成一个值，并将它返回给调用函数。
+12345typename functionName(parameterList) //C++对于返回值的类型有一定的限制：不能是数组，但可以是其他任何类型——整数、浮点数、指针，甚至可以是结构和对象！&#123;	stateme
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -2067,7 +2151,7 @@ region varchar(2
 if else1234if (test-condition)    statement1else    statement2
 
 例：
-12345678910111213141516171819#include &lt;io
+12345678910111213141516171819#include &lt;iostream&gt;#include &lt;ctime&gt;int main()&#123;    using namespace std;    char ch;    cout &lt;&lt; &quot;Type, and i shall repeat.\n&quot;;    cin.get(ch);    while (ch != &#x27;.&#x27;)    &#123;        if (ch == &#x27;\n&#x27;)            cout &lt;&lt; ch;        else            cout &lt;&lt; ++ch;        cin.get(ch);    &#125;    return 0;&#1
           ...
           <!--noindex-->
           <div class="post-button text-center">

@@ -440,7 +440,7 @@
         
           
           一个非常简单的小项目，不过是第一个用python爬虫写的代码，发出来纪念一下。
-12345678910111213141516171819202122232425262728293031323334# 拿到页面源代码# 通过re来提取有效信息import reimport csvimport req
+12345678910111213141516171819202122232425262728293031323334# 拿到页面源代码# 通过re来提取有效信息import reimport csvimport requestsheaders=&#123;    &quot;user-agent&quot;:&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36&quot;&#125;for a in range(-1,250,25):    url=&quot;https://movie.douban.com/top250?start=&#123;&#125;&amp;filter=&quot;.format(a)    resp=requests.get(url,headers=headers)    page_con
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -630,201 +630,11 @@
         
           
           在综合考虑后，使用了韩国的来必力进行了评论系统的搭建。该方法较为简单。首先在来必力官网注册账号，选择City版（免费），安装。（会生成 来必力City版安装代码以及 data-uid ，或者 进入管理页面-&gt;代码管理-&gt;一般网站，可以查看）使用一般网站的代码，如下：
-1234567891
+123456789101112131415161718&lt;!-- 来必力City版安装代码 --&gt;&lt;div id=&quot;lv-container&quot; data-id=&quot;city&quot; data-uid=&quot;这里是你自己的uid哦&quot;&gt;	&lt;script type=&quot;text/javascript&quot;&gt;   (function(d, s) &#123;       var j, e = d.getElementsByTagName(s)[0];       if (typeof LivereTower === &#x27;function&#x27;) &#123; return; &#125;       j = d
           ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/22/%E7%94%A8%E6%9D%A5%E5%BF%85%E5%8A%9B%E6%90%AD%E5%BB%BA%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaigong.github.io/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/透明底logo.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="翟公的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/" itemprop="url">我对语言学习的一些认识</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-21T14:00:34+08:00">
-                2022-05-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E6%84%9F/" itemprop="url" rel="index">
-                    <span itemprop="name">生活随感</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          ​    这个世界上大抵有三种学习好的人，一种是智商高的，一种是勤奋的，还有一种是既聪明又勤奋的。很不幸，我脑子既不聪明，平常也极其爱偷懒，就更别既聪明又勤奋了。每当看到别的同学刻苦背诵，我内心总是感到惭愧。久而久之，倒也发展出了偷懒的方法。因此这篇文章就来记录下我学语言的一些方法论。
-​    可
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1011,11 +821,202 @@
           
           这个栏目的灵感来源于@卢昌海，目的是鞭策自己多看，多想。这里贴出卢昌海的个人主页，受他的影响我开始写个人博客。卢昌海个人主页 (changhai.org)
 
-So can men and women be “just friends”? Both Meg Ryan and Billy Crystal
+So can men and women be “just friends”? Both Meg Ryan and Billy Crystal were perhaps correct from their own sexes’ point of view. Women like to have male friends-they offer companionship, sharing, protection in times of need, information about the opposite sex, and even a boost to their self-esteem. Men too gain much from their female friends, including companionship, information, and sometimes even contacts with pote
           ...
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/21/%E5%BE%AE%E8%A8%80%E5%B0%8F%E4%B9%89/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaigong.github.io/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://zhaigong-blog.oss-cn-hangzhou.aliyuncs.com/透明底logo.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="翟公的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/" itemprop="url">我对语言学习的一些认识</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-05-21T14:00:34+08:00">
+                2022-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E6%84%9F/" itemprop="url" rel="index">
+                    <span itemprop="name">生活随感</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          ​    这个世界上大抵有三种学习好的人，一种是智商高的，一种是勤奋的，还有一种是既聪明又勤奋的。很不幸，我脑子既不聪明，平常也极其爱偷懒，就更别既聪明又勤奋了。每当看到别的同学刻苦背诵，我内心总是感到惭愧。久而久之，倒也发展出了偷懒的方法。因此这篇文章就来记录下我学语言的一些方法论。
+​    可能是受王小波的熏陶，我学习从来都是跟着兴趣走的：什么东西有意思就去学，要是没有意思一眼也不愿意看。就好比数理化，学了后多多少少能解决些问题，体验思维的乐趣，因此我是非常愿意学的。对于这些感兴趣的科目，我都有超前的学习，学的最多的还是数学。还有一些无聊的科目，以政治最为代表。这件事从我上政治课的态度就能看出来：政治老师东扯西扯我是听的最为积极的，由于本人思想境界不高，到了习思想，这个政策那个政策就实在坚持不下去了。
+​    说了这么多离题的话，我的意图是说明兴趣对学习的重要性。我对文字本来就不敏感，就更需要些兴趣的加持了。所以上了高中，就搞了些英文原著来读。其中爱情作品最多，大概是为了弥补之前种种爱而不得的经历，体验一把恋爱的感觉。总而言之，有关爱情的作品确实能激起一个青春期男生的兴趣，而且
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2022/05/21/%E6%88%91%E5%AF%B9%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%B8%80%E4%BA%9B%E8%AE%A4%E8%AF%86/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1200,7 +1201,7 @@ So can men and women be “just friends”? Both Meg Ryan and Billy Crystal
       
         
           
-          利用C++以及随机函数实现一定数量选择题答案的生成。源代码如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include &l
+          利用C++以及随机函数实现一定数量选择题答案的生成。源代码如下：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include &lt;stdio.h&gt;#include &lt;iostream&gt;#include &lt;time.h&gt;using namespace std;#define MAX 4int main(int argc, char* argv[])&#123;    //srand()函数产生一个以当前时间开始的随机种子.    //应该放在for等循环语句前面不然要很长时间等待    srand((unsigned)time(NULL));    int number;    cout &lt;&lt; &quot;本程序利用随机函数作答选择题，请输入选择题的数量:&quot;;    cin &gt;&gt; number;    int answer;    for (int i 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1390,7 +1391,7 @@ So can men and women be “just friends”? Both Meg Ryan and Billy Crystal
         
           
           本篇文章记录了hexo使用的代码，遗忘时可以参考
-12345678910111213141516171819202122232425常见命令：hexo new &quot;postName&quot;      # 新建文章hexo new page &quot;pageName&quot; # 新
+12345678910111213141516171819202122232425常见命令：hexo new &quot;postName&quot;      # 新建文章hexo new page &quot;pageName&quot; # 新建页面hexo generate            # 生成静态页面至public目录hexo server              # 开启预览访问端口（默认端口4000，&#x27;ctrl + c&#x27;关闭server）hexo deploy              # 部署到GitHubhexo help                # 查看帮助hexo version             # 查看Hexo的版本缩写命令：hexo n == hexo newhexo g == hexo generatehexo s == hexo serverhexo d == hexo deploy组合命令：hexo s -g   # 生成并本地预览hexo d -g   # 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1583,8 +1584,9 @@ So can men and women be “just friends”? Both Meg Ryan and Billy Crystal
 朋友圈一些敏感内容无法分享
 用朋友圈做技术记录显得我水平不高，用朋友圈做生活记录又显得我不庄重
 怕扰民
-我知道这篇个人博客不会有什么人关注
-          ...
+我知道这篇个人博客不会有什么人关注，毕竟我也不是什么成功人士。因此建立本站的目的就是自娱自乐，对生活进行些反思。我希望这里能成为我的精神园地。翟公 于2022年5月20号
+
+          
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2022/05/20/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#more" rel="contents">
